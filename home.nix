@@ -12,12 +12,12 @@
   home = {
     username = "phush";
     homeDirectory = "/home/phush";
-    sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-      LIBVA_DRIVER_NAME = "nvidia";
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      XDG_CONFIG_HOME = "/home/phush/.config";
-    };
+    # sessionVariables = {
+    #  NIXOS_OZONE_WL = "1";
+    #  LIBVA_DRIVER_NAME = "nvidia";
+    #  __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    #  XDG_CONFIG_HOME = "/home/phush/.config";
+    #};
     stateVersion = "24.11";
   };
 
@@ -140,7 +140,7 @@
           };
           weather.unit = "metric";
         };
-        menus.dashboard.powermenu.avatar.image = "/home/phush/Downloads/meiyaSit.png";
+        menus.dashboard.powermenu.avatar.image = "/home/phush/.config/avatars/meiyaSit.png";
         menus.dashboard.directories.enabled = false;
         menus.dashboard.stats.enable_gpu = false;
         menus.dashboard.shortcuts.left = {
@@ -214,9 +214,9 @@
       monitor = ", 1920x1080, 0x0, 1";
       plugin = {
         hyprbars = {
-         bar_height = 20;
-         bar_title_enabled = true;
-         hyprbars-button = "rgb(ff4040), 10, 󰖭, hyprctl dispatch killactive";
+          bar_height = 20;
+          bar_title_enabled = true;
+          hyprbars-button = "rgb(ff4040), 10, 󰖭, hyprctl dispatch killactive";
         };
       };
       misc = {
@@ -247,18 +247,13 @@
     };
   };
 
-  programs.wpaperd = {
-    # enable = true;
-    settings = {
-      eDP-1 = {
-        path = "/home/phush/.config/wallpapers";
-        apply-shadow = true;
-        duration = "1m";
-      };
-    };
-  };
   home.file."./.config/wallpapers" = {
     source = ./wallpapers;
+    recursive = true;
+  };
+
+  home.file."./.config/avatars" = {
+    source = ./avatars;
     recursive = true;
   };
 

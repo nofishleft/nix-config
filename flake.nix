@@ -30,6 +30,7 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./hardware-ux433fn.nix
+        ./config-ux433fn.nix
         ./locale.nix
         ./configuration.nix
         inputs.home-manager.nixosModules.default
@@ -40,6 +41,7 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./hardware-north.nix
+        ./config-north.nix
         ./locale.nix
         ./configuration.nix
         inputs.home-manager.nixosModules.default
