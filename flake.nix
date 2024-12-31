@@ -27,9 +27,19 @@
     nikpkgs.config.allowUnfree = true;
     nixosConfigurations.zenbook = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inherit inputs;};
+      specialArgs = { inherit inputs; };
       modules = [
         ./hardware-ux433fn.nix
+        ./locale.nix
+        ./configuration.nix
+        inputs.home-manager.nixosModules.default
+      ];
+    };
+    nixosConfigurations.north = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./hardware-north.nix
         ./locale.nix
         ./configuration.nix
         inputs.home-manager.nixosModules.default
