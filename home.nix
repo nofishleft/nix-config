@@ -9,6 +9,13 @@
     "Xcursor.size" = 16;
     "Xft.dpi" = 800;
   };
+
+ # fonts.fontconfig.enable = true;
+
+ # home.packages = [
+ #   pkgs.cascadia-cove
+ # ];
+
   home = {
     username = "phush";
     homeDirectory = "/home/phush";
@@ -184,7 +191,6 @@
         };
       };
     };
-    kitty = { enable = true; };
   };
   wayland.windowManager.hyprland = {
     enable = true;
@@ -321,6 +327,61 @@
     '';
     extraLuaConfig = ''
     '';
-    
+  };
+
+  programs.kitty = {
+    enable = true;
+    themeFile = "rose-pine";
+    font = {
+      name = "caskaydia-cove";
+      size = 14;
+      package = pkgs.nerd-fonts.caskaydia-cove;
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    enableNushellIntegration = true;
+    settings = {
+      add_newline = true;
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+      };
+    };
+  };
+
+  programs.carapace = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
+
+  programs.nushell = {
+    enable = true;
+    extraConfig = ''
+      let carapace_completer = {|spans|
+        carapace $spans.0 nushell $spans | from json
+      }
+      $env.config = {
+        buffer_editor: 'nvim'
+        show_banner: false
+        completions: {
+          case_sensitive: false
+          quick: true
+          partial: true
+          algorithm: 'fuzzy'
+          external: {
+            enable = true;
+            max_results = 100;
+            completer = $carapace_completer
+          }
+        }
+      };
+      $env.PATH = ($env.PATH |
+        split row (char esep) |
+        prepend /home/phush/.apps/ |
+        append /usr/bin/env
+      )
+    '';
   };
 }

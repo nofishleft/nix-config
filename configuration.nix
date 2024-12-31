@@ -92,6 +92,7 @@
     youtube-music
 
     gh
+    neofetch
   ];
 
   config.environment.sessionVariables = {
