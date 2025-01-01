@@ -20,6 +20,17 @@
     };
   };
 
+/*  config.nixpkgs.overlays = [ (final: prev: {
+    rose-pine-gtk-theme = prev.rose-pine-gtk-theme.overrideAttrs (old: {
+      src = prev.fetchFromGitHub {
+        owner = "rose-pine";
+        repo = "gtk";
+        rev = "d0d7815f0af2facd3157e005cd7c606d4f28d881";
+        sha256 = "vCWs+TOVURl18EdbJr5QAHfB+JX9lYJ3TPO6IklKeFE=";
+      };
+    });
+  }) ];*/
+
   config.nixpkgs.config.allowUnfree = true;  
 
   # Bootloader.
@@ -40,6 +51,7 @@
     description = "phush";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    shell = pkgs.nushell;
   };
   
   config.home-manager = {
@@ -53,14 +65,30 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   config.environment.systemPackages = with pkgs; [
+    # Shells
+    bash
+    nushell
+  
+    # Editor
     vim
+    neovim
+
+    # Util
     pciutils
     wget
+    jq # Helps with json files
+
+    # Git things
     git
+    gh
+
     google-chrome
     phinger-cursors
-    waybar
     networkmanagerapplet
+
+    greetd.greetd
+    # Window title bar
+    waybar
     # Notifications
     hyprnotify
     libnotify
@@ -74,30 +102,32 @@
     hyprshot
     # Color picker
     hyprpicker
-
-    unzip
-
+    # Window manager
+    hyprland
     #File explorer
     nemo-with-extensions
 
-    neovim
-
-    hyprland
+    unzip
 
     # CLI Documentation search for Nix
     manix
 
-    jq
-
-    youtube-music
-
-    gh
     neofetch
+    btop
+
+    # Gui Apps
+    youtube-music
+    obs-studio
+
+    # Themes
+    rose-pine-gtk-theme
+    rose-pine-icon-theme
   ];
 
   config.environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     XDG_CONFIG_HOME = "$HOME/.config";
+    GTK_THEME = "rose-pine";
   } // (if config.useNvidiaGpu then {
     LIBVA_DRIVE_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -144,6 +174,7 @@
     hyprland = {
       enable = true;
       xwayland.enable = true;
+      withUWSM = true;
     };
     hyprlock.enable = true;
   };
@@ -173,9 +204,26 @@
       ] else [
         "amdgpu"
       ]);
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
+      #displayManager.gdm = {
+      #  enable = true;
+      #  wayland = true;
+      #};
+    };
+  };
+
+  config.services.greetd = {
+    enable = true;
+    settings = {
+      terminal = {
+        vt = 1;
+      };
+      default_session = {
+        command = "agreety --cmd /bin/sh";
+        user = "greeter";
+      };
+      initial_session = {
+        command = "uwsm start hyprland-uwsm.desktop";
+        user = "phush";
       };
     };
   };

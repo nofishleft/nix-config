@@ -1,11 +1,11 @@
-{ pkgs, inputs, ...}: {
+{ config, pkgs, inputs, ...}: {
   imports = [
     inputs.hyprpanel.homeManagerModules.hyprpanel
     inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
     inputs.nixcord.homeManagerModules.nixcord
   ];
 
-  xresources.properties = {
+  config.xresources.properties = {
     "Xcursor.size" = 16;
     "Xft.dpi" = 800;
   };
@@ -16,7 +16,7 @@
  #   pkgs.cascadia-cove
  # ];
 
-  home = {
+  config.home = {
     username = "phush";
     homeDirectory = "/home/phush";
     # sessionVariables = {
@@ -28,7 +28,7 @@
     stateVersion = "24.11";
   };
 
-  programs.nixcord = {
+  config.programs.nixcord = {
     enable = true;
     discord = {
       enable = false;
@@ -113,7 +113,7 @@
     };
   };
 
-  programs = {
+  config.programs = {
     home-manager.enable = true;
     bash = {
       enable = true;
@@ -122,7 +122,7 @@
     hyprcursor-phinger.enable = true;
     hyprpanel = {
       enable = true;
-      systemd.enable = true;
+      #systemd.enable = true;
       hyprland.enable = true;
       overwrite.enable = true;
       theme = "rose_pine";
@@ -154,34 +154,34 @@
           shortcut1 = {
             icon = builtins.fromJSON '' "\uf268" '';
             tooltip = "Chrome";
-            command = "google-chrome-stable";
+            command = "uwsm app -- google-chrome-stable";
           };
           shortcut2 = {
             icon = builtins.fromJSON '' "\uDB80\uDF86" ''; # F0386
             tooltip = "YT Music";
-            command = "youtube-music";
+            command = "uwsm app -- youtube-music";
           };
           shortcut3 = {
             icon = builtins.fromJSON '' "\uf1ff" '';
             tooltip = "Discord";
-            command = "vesktop";
+            command = "uwsm app -- vesktop";
           };
           shortcut4 = {
             icon = builtins.fromJSON '' "\uf422" '';
             tooltip = "Search";
-            command = "rofi -show drun";
+            command = "uwsm app -- walker";
           };
         };
         menus.dashboard.shortcuts.right = {
           shortcut1 = {
             icon = builtins.fromJSON '' "\uF1FB" '';
             tooltip = "Color Picker";
-            command = "sleep 0.5 && hyprpicker -a";
+            command = "sleep 0.5 && uwsm app -- hyprpicker -a";
           };
           shortcut3 = {
             icon = builtins.fromJSON '' "\uDB80\uDD00" '';
             tooltip = "Screenshot";
-            command = "sleep 0.5 && hyprshot --freeze -m active";
+            command = "sleep 0.5 && uwsm app -- hyprshot --freeze -m active";
           };
         };
         theme.bar.transparent = true;
@@ -192,18 +192,44 @@
       };
     };
   };
-  wayland.windowManager.hyprland = {
+
+  config.home.file."./.config/hypr/rose-pine.conf" = {
+    source = builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/rose-pine/hyprland/6898fe967c59f9bec614a9a58993e0cb8090d052/rose-pine.conf";
+      sha256 = "0q4zna3njimn2ffaincjcxyiyx8qlz625q6n4k3qbxwqbmvdlcc2";
+    };
+  };
+
+  config.wayland.windowManager.hyprland = {
     enable = true;
+    systemd.enable = false;
     plugins = with pkgs.hyprlandPlugins; [
       hyprbars
     ];
     settings = {
+      source = [ "/home/phush/.config/hypr/rose-pine.conf" ];
+      general = {
+        "col.active_border" = "$rose $pine $love $iris 90deg";
+        "col.inactive_border" = "$muted";
+      };
+      decoration = {
+        rounding = 5;
+        active_opacity = 1.0;
+        inactive_opacity = 0.8;
+        blur = {
+          enabled = true;
+          size = 8;
+          passes = 1;
+          new_optimizations = true;
+        };
+      };
       "$mod" = "SUPER";
       bind =
         [
-          "$mod, F, exec, google-chrome-stable"
-          "$mod, Q, exec, kitty"
-          "$mod, L, exec, hyprlock"
+          "$mod, E, exec, uwsm app -- nemo"
+          "$mod, F, exec, uwsm app -- google-chrome-stable"
+          "$mod, Q, exec, uwsm app -- kitty"
+          "$mod, L, exec, uwsm app -- hyprlock"
         ]
         ++ (
           # Workspaces
@@ -220,22 +246,41 @@
       monitor = ", 1920x1080, 0x0, 1";
       plugin = {
         hyprbars = {
-          bar_height = 20;
+          /*bar_height = 20;
           bar_title_enabled = true;
-          hyprbars-button = "rgb(ff4040), 10, 󰖭, hyprctl dispatch killactive";
+          hyprbars-button = "rgb(ff4040), 10, 󰖭, hyprctl dispatch killactive";*/
+          bar_blur = true;
+          bar_height = 24;#38;
+          bar_color = "0xdd191724";
+#          bar_color = "rgba(1e1e1edd)";
+          "col.text" = "$rose";#"0xffebbcba";#"$rose";
+          bar_text_size = 10;#12;
+          bar_text_font = "Caskaydia Cove Bold";
+          bar_button_padding = 8;#12;
+          bar_padding = 10;
+          bar_precedence_over_border = true;
+          bar_part_of_window = true;
+          hyprbars-button = [
+            "rgb(FF605C), 14, , hyprctl dispatch killactive"
+            "rgb(FFBD44), 14, , hyprctl dispatch fullscreen 2"
+            "rgb(00CA4E), 14, , hyprctl dispatch togglefloating"
+          ];
         };
       };
       misc = {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
       };
-      exec-once = ["hyprpaper"];
+      exec-once = [
+        "uwsm app -- hyprpaper"
+        "uwsm app -- walker --gapplication.service"
+      ];
       # exec-once = ["swww-daemon"];
       # exec-once = ["wpaperd -d"];
     };
   };
 
-  services.hyprpaper = {
+  config.services.hyprpaper = {
     enable = true;
     settings = {
       ipc = true;
@@ -253,44 +298,107 @@
     };
   };
 
-  home.file."./.config/wallpapers" = {
+  config.home.file."./.config/wallpapers" = {
     source = ./wallpapers;
     recursive = true;
   };
 
-  home.file."./.config/avatars" = {
+  config.home.file."./.config/avatars" = {
     source = ./avatars;
     recursive = true;
   };
 
-  programs.hyprlock = {
+  config.programs.hyprlock = {
     enable = true;
     settings = {
       general = {
         disable_loading_bar = true;
-        grace = 1;
+        grace = 0;
         hide_cursor = true;
         no_fade_in = false;
+        no_fade_out = false;
       };
       background = {
+        path = "/home/phush/.config/wallpapers/cyberfomx_1080p.png";
         color = "rgba(0, 0, 0, 1.0)";
+        blur_passes = 2;
+        blur_size = 7;
+        contrast = 1;
+        brightness = 0.5;
+        vibrancy = 0.2;
+        vibrancy_darkness = 0.2;
+        crossfade_time = 1;
       };
+      label = [{
+        position = "0, 200";
+        text = "cmd[update:1000] echo \"$(date +\"%-I:%M\")\"";
+        color = "rgba(242, 243, 244, 0.75)";
+        font_size = 95;
+        font-family = "Jetbrains Mono Extrabold";
+        halign = "center";
+        valign = "center";
+      }];
       input-field = [{
-        size = "200, 50";
-        position = "0, -80";
+        size = "200, 60";
+        position = "0, -200";
         dots_center = true;
-        fade_on_empty = true;
+        dots_size = 0.2;
+        dots_spacing = 0.35;
         font_color = "rgba(202, 211, 245, 1.0)";
-        inner_color = "rgba(91, 96, 120, 1.0)";
-        outer_color = "rgba(24, 25, 38, 1.0)";
-        outline_thickness = 5;
-        placeholder_text = "<span foreground=\"##cad3f5\">Password...</span>";
-        shadow_passes = 2;
+        inner_color = "rgba(0, 0, 0, 0.2)";
+        outer_color = "rgba(0, 0, 0, 0)";
+        check_color = "rgb(204, 136, 34)";
+        outline_thickness = 2;
+        placeholder_text = "<span foreground=\"##cdd6f4\">Password...</span>";
+        hide_input = false;
+        fade_on_empty = false;
+        shadow_passes = 0;
+        rounding = -1;
       }];
     };
   };
 
-  programs.neovim = {
+  # GDM
+  /*dconf.settings = {
+    "org/gnome/desktop/background" = {
+      picture-uri = "file:///home/phush/.config/wallpapers/cyberfomx_1080p.png";
+      picture-options = "scaled";
+      primary-color = "000000";
+      secondary-color = "FFFFFF";
+      color-shading-type = "vertical";
+    };
+  };*/
+
+  config.dconf.settings = {
+    "org.gnome.desktop.interface" = {
+      gtk-theme = "rose-pine";
+      icon-theme = "rose-pine";
+      color-scheme = "prefer-dark";
+    };
+    "org/gnome/desktop/interface" = {
+      gtk-theme = "rose-pine";
+      icon-theme = "rose-pine";
+      color-scheme = "prefer-dark";
+    };
+  };
+  
+  config.gtk = {
+    enable = true;
+    theme = {
+      name = "rose-pine";
+      package = pkgs.rose-pine-gtk-theme;
+    };
+    iconTheme = {
+      name = "rose-pine";
+      package = pkgs.rose-pine-icon-theme;
+    };
+    font = {
+      name = "caskaydia-cove";
+      package = pkgs.nerd-fonts.caskaydia-cove;
+    };
+  };
+
+  config.programs.neovim = {
     enable = true;
     defaultEditor = true;
     extraPackages = with pkgs; [
@@ -329,7 +437,7 @@
     '';
   };
 
-  programs.kitty = {
+  config.programs.kitty = {
     enable = true;
     themeFile = "rose-pine";
     font = {
@@ -339,7 +447,7 @@
     };
   };
 
-  programs.starship = {
+  config.programs.starship = {
     enable = true;
     enableNushellIntegration = true;
     settings = {
@@ -351,12 +459,12 @@
     };
   };
 
-  programs.carapace = {
+  config.programs.carapace = {
     enable = true;
     enableNushellIntegration = true;
   };
 
-  programs.nushell = {
+  config.programs.nushell = {
     enable = true;
     extraConfig = ''
       let carapace_completer = {|spans|
@@ -371,9 +479,9 @@
           partial: true
           algorithm: 'fuzzy'
           external: {
-            enable = true;
-            max_results = 100;
-            completer = $carapace_completer
+            enable: true
+            max_results: 100
+            completer: $carapace_completer
           }
         }
       };
@@ -382,6 +490,55 @@
         prepend /home/phush/.apps/ |
         append /usr/bin/env
       )
+      if (uwsm check may-start | complete).exit_code == 0 {
+        exec uwsm start =S hyprland-uwsm.desktop
+      }
     '';
+  };
+
+  config.home.file."./.config/btop/themes/rose-pine.theme" = {
+    source = builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/rose-pine/btop/6d6abdc0a8c8bcd3b056d9fe3256cfbe7e359312/rose-pine.theme";
+      sha256 = "1injry07mx683f1cy2ks73rdiv4dfi8b5ija8bq6adhbgcw7b1h8";
+    };
+  };
+
+  config.programs.btop = {
+    enable = true;
+    settings = {
+      color_theme = "rose-pine";
+/*      theme_background = false;
+      truecolor = true;
+      force_tty = false;
+      presets = "cpu:1:default,proc:0:default cpu:0:default,mem:0:default,net:0:default cpu:0:block,net:0:tty";
+      vim_keys = false;
+      rounded_corners = true;
+      graph_symbol = "braille";
+      graph_symbol_cpu = "default";
+      graph_symbol_mem = "default";
+      graph_symbol_net = "default";
+      graph_symbol_proc = "default";
+      shown_boxes = "proc cpu mem net";
+      update_ms = 2000;
+      proc_sorting = "cpu lazy";
+      proc_reversed = false;
+      proc_tree = false;
+      proc_colors = true;
+      proc_gradient = true;
+      proc_per_core = true;
+      proc_mem_bytes = true;
+      proc_info_smaps = false;
+      proc_left = false;
+      cpu_graph_upper = "total";
+      cpu_graph_lower = "total";
+*/
+    };
+  };
+
+  config.programs.obs-studio = {
+    enable = true;
+    plugins = [
+      pkgs.obs-studio-plugins.wlrobs
+    ];
   };
 }
