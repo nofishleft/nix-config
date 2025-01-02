@@ -3,6 +3,7 @@
     inputs.hyprpanel.homeManagerModules.hyprpanel
     inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
     inputs.nixcord.homeManagerModules.nixcord
+    ./modules/youtube-music.nix
   ];
 
   config.xresources.properties = {
@@ -540,5 +541,37 @@
     plugins = [
       pkgs.obs-studio-plugins.wlrobs
     ];
+  };
+
+  config.programs.youtube-music = {
+    enable = true;
+    settings = {
+      tray = true;
+      autoUpdates = true;
+      disableHardwareAcceleration = false;
+    };
+    themes = [];
+    plugins = {
+      precise-volume = {
+        enabled = true;
+        globalShortcuts = {};
+      };
+      in-app-menu = {
+        enabled = true;
+        hideDOMWindowControls = true;
+      };
+      exponential-volume = {
+        enabled = true;
+      };
+      compact-sidebar = {
+        enabled = true;
+      };
+      disable-autoplay = {
+        enabled = true;
+      };
+    };
+    extraConfig = {
+      resumeOnStart = true;
+    };
   };
 }
