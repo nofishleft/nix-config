@@ -4,6 +4,7 @@
 {
   # Set your time zone.
   time.timeZone = "Pacific/Auckland";
+  time.hardwareClockInLocalTime = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_NZ.UTF-8";
