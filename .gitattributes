@@ -1,0 +1,9 @@
+*.nix text eol=lf
+*.lock text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# Images
+*.png binary
+*.jpeg binary
+*.webp binary
