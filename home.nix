@@ -1,10 +1,16 @@
-{ config, pkgs, inputs, ...}: {
+{ config, pkgs, lib, inputs, ...}: {
   imports = [
     inputs.hyprpanel.homeManagerModules.hyprpanel
     inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
     inputs.nixcord.homeManagerModules.nixcord
+    /*inputs.impermanence.homeManagerModules.impermanence*/
     ./modules/youtube-music.nix
   ];
+
+  options.hm-impermanent = lib.mkOption {
+    type = lib.types.lines;
+    default = "#!/env/bin bash";
+  };
 
   config.xresources.properties = {
     "Xcursor.size" = 16;
@@ -28,6 +34,28 @@
     #};
     stateVersion = "24.11";
   };
+
+  /*config.home.persistence."/persistent/home/phush" = {
+    directories = [
+      "Downloads"
+      "Music"
+      "Pictures"
+      "Documents"
+      "Videos"
+      ".gnupg"
+      ".config/gh"
+      ".config/vesktop/sessionData"
+      ".config/google-chrome"
+      ".local/share/keyrings"
+      "nix-config"
+      "Repos"
+    ];
+    files = [
+      ".gitconfig"
+      ".nvidia-settings-rc"
+    ];
+    allowOther = true;
+  };*/
 
   config.programs.nixcord = {
     enable = true;
@@ -194,6 +222,10 @@
     };
   };
 
+  config.home.file."./.config/hm-impermanent.sh" = {
+    text = config.hm-impermanent;
+  };
+
   config.home.file."./.config/hypr/rose-pine.conf" = {
     source = builtins.fetchurl {
       url = "https://raw.githubusercontent.com/rose-pine/hyprland/6898fe967c59f9bec614a9a58993e0cb8090d052/rose-pine.conf";
@@ -275,6 +307,7 @@
       exec-once = [
         "uwsm app -- hyprpaper"
         "uwsm app -- walker --gapplication.service"
+        "bash /home/phush/.config/hm-impermanent.sh"
       ];
       # exec-once = ["swww-daemon"];
       # exec-once = ["wpaperd -d"];
@@ -550,7 +583,7 @@
       autoUpdates = true;
       disableHardwareAcceleration = false;
     };
-    themes = [];
+    themes = [ "rose-pine" ];
     plugins = {
       precise-volume = {
         enabled = true;

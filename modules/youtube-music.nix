@@ -11,7 +11,7 @@
       };
       themes = lib.mkOption {
         description = "";
-        type = with lib.types; listOf lines;
+        type = with lib.types; listOf str;
         default = [];
       };
       plugins = lib.mkOption {
@@ -32,15 +32,24 @@
     home.packages = lib.concatLists [
       (lib.optional (config.programs.youtube-music.package != null) config.programs.youtube-music.package)
     ];
-    home.file.".config/Youtube Music/config.json" = {
+    /*home.file.".config/YouTube Music/config.json" = {
+      source = config.lib.file.mkOutOfStoreSymlink "/home/phush/.config/YouTube Music/hm-config.json";
+    };*/
+    hm-impermanent = "cp '/home/phush/.config/YouTube Music/hm-config.json' '/home/phush/.config/YouTube Music/config.json'";
+    home.file.".config/YouTube Music/hm-config.json" = {
       text = builtins.toJSON (
         {
           options = config.programs.youtube-music.settings // {
-          themes = config.programs.youtube-music.themes;
-        };
+            themes = [] ++ (lib.optionals (builtins.elem "rose-pine" config.programs.youtube-music.themes) [
+              "/home/phush/.config/YouTube Music/themes/rose-pine.css"
+            ]);
+          };
           plugins = config.programs.youtube-music.plugins;
         } // config.programs.youtube-music.extraConfig
       );
     };
+    home.file.".config/YouTube Music/themes/rose-pine.css" = lib.mkIf (builtins.elem "rose-pine" config.programs.youtube-music.themes) {
+      source = ./../themes/youtube-music/rose-pine.css;
+    }; 
   };
 }

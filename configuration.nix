@@ -170,6 +170,9 @@
   } else {
   });
 
+  # Required for home.persistence.*.allowOther
+  config.programs.fuse.userAllowOther = true;
+
   config.programs = {
     hyprland = {
       enable = true;
