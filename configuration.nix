@@ -31,7 +31,11 @@
     });
   }) ];*/
 
-  config.nixpkgs.config.allowUnfree = true;  
+  config.nixpkgs.config.allowUnfree = true;
+  config.nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Bootloader.
   config.boot.loader = {
