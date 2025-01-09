@@ -29,6 +29,19 @@
 
   outputs = { self, nixpkgs, ... }@inputs: {
     nikpkgs.config.allowUnfree = true;
+    nixosModules.default = { config, pkgs, lib, ... }: {
+      options.services.wluma.enable = lib.mkEnableOption "wluma";
+      config = lib.mkIf config.services.wluma.enable {
+        systemd.user.services.wluma = {
+          enable = true;
+          after = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
+          serviceConfig = {
+            ExecStart = "${pkgs.wluma}/bin/wluma";
+          };
+        };
+      };
+    };
     nixosConfigurations.zenbook = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -38,6 +51,7 @@
         ./locale.nix
         ./configuration.nix
         inputs.home-manager.nixosModules.default
+        self.nixosModules.default
       ];
     };
     nixosConfigurations.north = nixpkgs.lib.nixosSystem {
@@ -49,6 +63,7 @@
         ./locale.nix
         ./configuration.nix
         inputs.home-manager.nixosModules.default
+        self.nixosModules.default
       ];
     };
   };

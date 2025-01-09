@@ -9,9 +9,9 @@
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelModules = [ "kvm-amd" "i2c-dev" "ddcci_backlight" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.ddcci-driver ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/102071a3-f501-4037-8ade-398dbea5cc92";
@@ -36,4 +36,8 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  hardware.i2c.enable = true;
+  backlightControl = true;
+  services.wluma.enable = true;
 }

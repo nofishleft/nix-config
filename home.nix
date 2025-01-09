@@ -17,21 +17,9 @@
     "Xft.dpi" = 800;
   };
 
- # fonts.fontconfig.enable = true;
-
- # home.packages = [
- #   pkgs.cascadia-cove
- # ];
-
   config.home = {
     username = "phush";
     homeDirectory = "/home/phush";
-    # sessionVariables = {
-    #  NIXOS_OZONE_WL = "1";
-    #  LIBVA_DRIVER_NAME = "nvidia";
-    #  __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    #  XDG_CONFIG_HOME = "/home/phush/.config";
-    #};
     stateVersion = "24.11";
   };
 
@@ -151,6 +139,7 @@
     hyprcursor-phinger.enable = true;
     hyprpanel = {
       enable = true;
+      overlay.enable = true;
       #systemd.enable = true;
       hyprland.enable = true;
       overwrite.enable = true;
@@ -242,6 +231,10 @@
     settings = {
       source = [ "/home/phush/.config/hypr/rose-pine.conf" ];
       general = {
+        monitor = [
+          "DP-1, 3440x1440@144, 0x0, 1"
+          "DP-2, 1920x1080@60, -1920x360, 1"
+        ];
         "col.active_border" = "$rose $pine $love $iris 90deg";
         "col.inactive_border" = "$muted";
       };
@@ -392,17 +385,6 @@
     };
   };
 
-  # GDM
-  /*dconf.settings = {
-    "org/gnome/desktop/background" = {
-      picture-uri = "file:///home/phush/.config/wallpapers/cyberfomx_1080p.png";
-      picture-options = "scaled";
-      primary-color = "000000";
-      secondary-color = "FFFFFF";
-      color-shading-type = "vertical";
-    };
-  };*/
-
   config.dconf.settings = {
     "org.gnome.desktop.interface" = {
       gtk-theme = "rose-pine";
@@ -541,31 +523,6 @@
     enable = true;
     settings = {
       color_theme = "rose-pine";
-/*      theme_background = false;
-      truecolor = true;
-      force_tty = false;
-      presets = "cpu:1:default,proc:0:default cpu:0:default,mem:0:default,net:0:default cpu:0:block,net:0:tty";
-      vim_keys = false;
-      rounded_corners = true;
-      graph_symbol = "braille";
-      graph_symbol_cpu = "default";
-      graph_symbol_mem = "default";
-      graph_symbol_net = "default";
-      graph_symbol_proc = "default";
-      shown_boxes = "proc cpu mem net";
-      update_ms = 2000;
-      proc_sorting = "cpu lazy";
-      proc_reversed = false;
-      proc_tree = false;
-      proc_colors = true;
-      proc_gradient = true;
-      proc_per_core = true;
-      proc_mem_bytes = true;
-      proc_info_smaps = false;
-      proc_left = false;
-      cpu_graph_upper = "total";
-      cpu_graph_lower = "total";
-*/
     };
   };
 

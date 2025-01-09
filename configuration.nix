@@ -18,6 +18,7 @@
         nvidiaBusId = "PCI:2:0:0";
       };
     };
+    backlightControl = lib.mkEnableOption "enable backlight control";
   };
 
 /*  config.nixpkgs.overlays = [ (final: prev: {
@@ -81,6 +82,7 @@
     pciutils
     wget
     jq # Helps with json files
+    ddcutil
 
     # Git things
     git
@@ -126,18 +128,16 @@
     # Themes
     rose-pine-gtk-theme
     rose-pine-icon-theme
-  ];
+  ] ++ lib.optionals config.backlightControl [  pkgs.wluma pkgs.brightnessctl pkgs.ddcutil ];
 
   config.environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     XDG_CONFIG_HOME = "$HOME/.config";
     GTK_THEME = "rose-pine";
-  } // (if config.useNvidiaGpu then {
+  } // lib.mkIf config.useNvidiaGpu {
     LIBVA_DRIVE_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-  } else {
-
-  });
+  };
 
   config.environment.etc = {
     "xdg/gtk-3.0/settings.ini".text = ''
@@ -158,7 +158,7 @@
       enable = true;
       enable32Bit = true;
     };
-  } // (if config.useNvidiaGpu then {
+  } // lib.mkIf config.useNvidiaGpu {
     nvidia = {
       open = false;
       modesetting.enable = true;
@@ -167,12 +167,9 @@
       powerManagement.enable = true;
       prime = {
         offload.enable = true;
-        # intelBusId = "PCI:0:2:0";
-        # nvidiaBusId = "PCI:2:0:0";
       } // config.nvidiaBusIds;
     };
-  } else {
-  });
+  };
 
   # Required for home.persistence.*.allowOther
   config.programs.fuse.userAllowOther = true;
@@ -211,10 +208,6 @@
       ] else [
         "amdgpu"
       ]);
-      #displayManager.gdm = {
-      #  enable = true;
-      #  wayland = true;
-      #};
     };
   };
 
