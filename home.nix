@@ -65,6 +65,7 @@
     };
     config = {
       themeLinks = [
+        "https://raw.githubusercontent.com/rose-pine/discord/2651b116511f5c476da7ec9eb413c4d84fa21064/rose-pine.theme.css"
       ];
       transparent = true;
       disableMinSize = true;
