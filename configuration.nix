@@ -128,7 +128,10 @@
     # Themes
     rose-pine-gtk-theme
     rose-pine-icon-theme
-  ] ++ lib.optionals config.backlightControl [  pkgs.wluma pkgs.brightnessctl pkgs.ddcutil ];
+  ] ++ ( with pkgs.jetbrains; [
+    clion
+    rust-rover
+  ]) ++ lib.optionals config.backlightControl [  pkgs.wluma pkgs.brightnessctl pkgs.ddcutil ];
 
   config.environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
