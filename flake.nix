@@ -66,5 +66,9 @@
         self.nixosModules.default
       ];
     };
+    devShells."x86_64-linux" = let
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
+    in
+    import ./devshell.nix { inherit pkgs; };
   };
 }

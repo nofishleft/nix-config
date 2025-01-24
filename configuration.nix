@@ -19,6 +19,7 @@
       };
     };
     backlightControl = lib.mkEnableOption "enable backlight control";
+    gaming = lib.mkEnableOption "gaming";
   };
 
 /*  config.nixpkgs.overlays = [ (final: prev: {
@@ -32,11 +33,15 @@
     });
   }) ];*/
 
+  config.boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   config.nixpkgs.config.allowUnfree = true;
   config.nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
+
+  config.security.polkit.enable = true;
 
   # Bootloader.
   config.boot.loader = {
@@ -54,9 +59,10 @@
   config.users.users.phush = {
     isNormalUser = true;
     description = "phush";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "i2c" "video" ];
     packages = with pkgs; [];
-    shell = pkgs.nushell;
+    shell = pkgs.bash;
+#    shell = pkgs.nushell;
   };
   
   config.home-manager = {
@@ -83,6 +89,10 @@
     wget
     jq # Helps with json files
     ddcutil
+    gparted
+    ntfs3g
+
+    wineWowPackages.waylandFull
 
     # Git things
     git
@@ -91,6 +101,8 @@
     google-chrome
     phinger-cursors
     networkmanagerapplet
+
+    libsForQt5.qt5.qtwayland
 
     greetd.greetd
     # Window title bar
@@ -112,6 +124,8 @@
     hyprland
     #File explorer
     nemo-with-extensions
+    # Gui elevation
+    hyprpolkitagent
 
     unzip
 
@@ -124,6 +138,7 @@
     # Gui Apps
     youtube-music
     obs-studio
+    gitkraken
 
     # Themes
     rose-pine-gtk-theme
@@ -131,24 +146,53 @@
   ] ++ ( with pkgs.jetbrains; [
     clion
     rust-rover
-  ]) ++ lib.optionals config.backlightControl [  pkgs.wluma pkgs.brightnessctl pkgs.ddcutil ];
+  ]) ++ (with pkgs; lib.optionals config.backlightControl [
+    wluma
+    brightnessctl
+    ddcutil
+  ]) ++ (with pkgs; lib.optionals config.gaming [
+    steamtinkerlaunch
+  ]);
+
+  config.programs.steam.enable = config.gaming;
+  config.programs.gamescope.enable = config.gaming;
+  config.programs.gamemode.enable = config.gaming;
+
+  config.programs.direnv.enable = true;
+
+  #config.programs.steam = {
+  #  enable = true;
+  #};
 
   config.environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
+    QT_QPA_PLATFORM="wayland;xcb";
+    ELECTRON_OZONE_PLATFORM_HINT="wayland";
+    CLUTTER_BACKEND="wayland";
+    SDL_VIDEODRIVER="wayland";
+    XDG_SESSION_TYPE = "wayland";
     XDG_CONFIG_HOME = "$HOME/.config";
     GTK_THEME = "rose-pine";
+    HYPRCURSOR_THEME = "phinger-cursors-light";
+    HYPRCURSOR_SIZE = "24";
   } // lib.mkIf config.useNvidiaGpu {
-    LIBVA_DRIVE_NAME = "nvidia";
+    LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
-  config.environment.etc = {
+  config.qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "breeze";
+  };
+
+/*  config.environment.etc = {
     "xdg/gtk-3.0/settings.ini".text = ''
       [Settings]
       gtk-application-prefer-dark-theme=true
     '';
   };
-
+*/
   config.fonts.packages = [
     pkgs.font-awesome
     pkgs.powerline-fonts

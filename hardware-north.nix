@@ -13,16 +13,21 @@
   boot.kernelModules = [ "kvm-amd" "i2c-dev" "ddcci_backlight" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.ddcci-driver ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/102071a3-f501-4037-8ade-398dbea5cc92";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/102071a3-f501-4037-8ade-398dbea5cc92";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/97FA-F89B";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/97FA-F89B";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+
+  fileSystems."/games" = {
+    device = "/dev/disk/by-uuid/ef469b24-3f80-4316-b22c-459142074889";
+    fsType = "ext4";
+  };
 
   swapDevices = [ ];
 

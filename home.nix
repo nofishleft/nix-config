@@ -13,14 +13,27 @@
   };
 
   config.xresources.properties = {
-    "Xcursor.size" = 16;
-    "Xft.dpi" = 800;
+    "Xcursor.size" = 24;
+    "Xft.dpi" = 110;
   };
 
   config.home = {
     username = "phush";
     homeDirectory = "/home/phush";
     stateVersion = "24.11";
+  };
+
+  config.home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    QT_QPA_PLATFORM="wayland;xcb";
+    ELECTRON_OZONE_PLATFORM_HINT="wayland";
+    CLUTTER_BACKEND="wayland";
+    SDL_VIDEODRIVER="wayland";
+    XDG_SESSION_TYPE = "wayland";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    GTK_THEME = "rose-pine";
+    HYPRCURSOR_THEME = "phinger-cursors-light";
+    HYPRCURSOR_SIZE = "24";
   };
 
   /*config.home.persistence."/persistent/home/phush" = {
@@ -111,7 +124,10 @@
           enable = true;
           showMode = "muted";
         };
-        showMeYourName.enable = true;
+        showMeYourName = {
+          enable = true;
+          mode = "nick-user";
+        };
         showTimeoutDuration.enable = true;
         silentMessageToggle.enable = true;
         silentTyping = {
@@ -223,6 +239,13 @@
     };
   };
 
+  config.home.pointerCursor = {
+    name = "phinger-cursor-light";
+    package = pkgs.phinger-cursors;
+    size = 24;
+    gtk.enable = true;
+  };
+
   config.wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
@@ -230,6 +253,7 @@
       hyprbars
     ];
     settings = {
+      input.sensitivity = -0.5;
       source = [ "/home/phush/.config/hypr/rose-pine.conf" ];
       general = {
         monitor = [
@@ -241,15 +265,29 @@
       };
       decoration = {
         rounding = 5;
-        active_opacity = 1.0;
+        /*active_opacity = 1.0;
         inactive_opacity = 0.8;
         blur = {
           enabled = true;
           size = 8;
           passes = 1;
           new_optimizations = true;
-        };
+        };*/
       };
+      windowrulev2 = [
+        "workspace name:gaming, initialClass:gamescope"
+        "workspace name:gaming, initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
+        "workspace 3, initialTitle:^(Flawless Widescreen.*)"
+        "float, initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
+        "maxsize 480 720, workspace:name:gaming, initialClass:yad"
+        "float, workspace:name:gaming, initialClass:yad"
+        "fullscreen, workspace:name:gaming, initialClass:gamescope"
+      ];
+      workspace = [
+        "name:gaming, m[DP-1], rounding:false, decorate:false, shadow:false, gapsin:0, gapsout:0, border:false"
+        "1, m[DP-1], default:true"
+        "2, m[DP-2], default:true"
+      ];
       "$mod" = "SUPER";
       bind =
         [
@@ -257,6 +295,9 @@
           "$mod, F, exec, uwsm app -- google-chrome-stable"
           "$mod, Q, exec, uwsm app -- kitty"
           "$mod, L, exec, uwsm app -- hyprlock"
+          "$mod, R, exec, uwsm app -- walker"
+          "$mod, G, focusworkspaceoncurrentmonitor, name:gaming"
+          "$mod SHIFT, G, movetoworkspace, name:gaming"
         ]
         ++ (
           # Workspaces
@@ -302,6 +343,7 @@
         "uwsm app -- hyprpaper"
         "uwsm app -- walker --gapplication.service"
         "bash /home/phush/.config/hm-impermanent.sh"
+        "systemctl --user enable --now hyprpolkitagent.service"
       ];
       # exec-once = ["swww-daemon"];
       # exec-once = ["wpaperd -d"];
@@ -390,12 +432,13 @@
     "org.gnome.desktop.interface" = {
       gtk-theme = "rose-pine";
       icon-theme = "rose-pine";
-      color-scheme = "prefer-dark";
+      #color-scheme = "prefer-dark";
     };
     "org/gnome/desktop/interface" = {
       gtk-theme = "rose-pine";
       icon-theme = "rose-pine";
-      color-scheme = "prefer-dark";
+      cursor-theme = "phinger-cursors-light";
+      #color-scheme = "prefer-dark";
     };
   };
   
@@ -409,11 +452,27 @@
       name = "rose-pine";
       package = pkgs.rose-pine-icon-theme;
     };
+    cursorTheme = {
+      name = "phinger-cursors-light";
+      package = pkgs.phinger-cursors;
+      size = 24;
+    };
     font = {
       name = "caskaydia-cove";
       package = pkgs.nerd-fonts.caskaydia-cove;
     };
+    gtk3.extraConfig = {
+      #gtk-application-prefer-dark-theme = true;
+      gtk-key-theme-name = "rose-pine";
+      gtk-icon-theme-name = "rose-pine";
+    };
   };
+
+  /*config.qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "rose-pine";
+  };*/
 
   config.programs.neovim = {
     enable = true;
@@ -466,7 +525,7 @@
 
   config.programs.starship = {
     enable = true;
-    enableNushellIntegration = true;
+    # enableNushellIntegration = true;
     settings = {
       add_newline = true;
       character = {
@@ -478,11 +537,11 @@
 
   config.programs.carapace = {
     enable = true;
-    enableNushellIntegration = true;
+    # enableNushellIntegration = true;
   };
 
   config.programs.nushell = {
-    enable = true;
+    enable = false;
     extraConfig = ''
       let carapace_completer = {|spans|
         carapace $spans.0 nushell $spans | from json
@@ -537,6 +596,7 @@
   config.programs.youtube-music = {
     enable = true;
     settings = {
+      appVisible = true;
       tray = true;
       autoUpdates = true;
       disableHardwareAcceleration = false;
@@ -557,8 +617,10 @@
       compact-sidebar = {
         enabled = true;
       };
+      # On start, select last played song, but don't autoplay it
       disable-autoplay = {
         enabled = true;
+        applyOnce = true;
       };
     };
     extraConfig = {

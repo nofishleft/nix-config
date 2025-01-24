@@ -5,6 +5,7 @@
     programs.youtube-music = {
       enable = lib.mkEnableOption "youtube-music";
       settings = {
+        appVisible = lib.mkEnableOption "appVisible";
         tray = lib.mkEnableOption "tray";
         autoUpdates = lib.mkEnableOption "autoUpdates";
         disableHardwareAcceleration = lib.mkEnableOption "disableHardwareAcceleration";
