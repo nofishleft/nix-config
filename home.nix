@@ -605,7 +605,10 @@
     plugins = {
       precise-volume = {
         enabled = true;
+        steps = 1;
+        arrowsShortcut = true;
         globalShortcuts = {};
+        savedVolume = 25;
       };
       in-app-menu = {
         enabled = true;
@@ -621,6 +624,12 @@
       disable-autoplay = {
         enabled = true;
         applyOnce = true;
+      };
+      video-toggle = {
+        mode = "custom";
+      };
+      notifications = {
+        enabled = false;
       };
     };
     extraConfig = {

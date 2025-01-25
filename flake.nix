@@ -42,30 +42,23 @@
         };
       };
     };
-    nixosConfigurations.zenbook = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hardware-ux433fn.nix
-        ./config-ux433fn.nix
-        ./locale.nix
-        ./configuration.nix
-        inputs.home-manager.nixosModules.default
-        self.nixosModules.default
-      ];
-    };
-    nixosConfigurations.north = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hardware-north.nix
-        ./config-north.nix
-        ./locale.nix
-        ./configuration.nix
-        inputs.home-manager.nixosModules.default
-        self.nixosModules.default
-      ];
-    };
+    nixosConfigurations = (builtins.mapAttrs (
+      name: value: nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hardware-${value}.nix
+          ./config-${value}.nix
+          ./locale.nix
+          ./configuration.nix
+          inputs.home-manager.nixosModules.default
+          self.nixosModules.default
+        ];
+      }
+    ) {
+      zenbook = "ux433fn";
+      north = "north";
+    });
     devShells."x86_64-linux" = let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
     in
