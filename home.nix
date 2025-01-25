@@ -279,7 +279,7 @@
         "workspace name:gaming, initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
         "workspace 3, initialTitle:^(Flawless Widescreen.*)"
         "float, initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
-        "maxsize 480 720, workspace:name:gaming, initialClass:yad"
+        "maxsize 1920 1080, workspace:name:gaming, initialClass:yad"
         "float, workspace:name:gaming, initialClass:yad"
         "fullscreen, workspace:name:gaming, initialClass:gamescope"
       ];
@@ -289,18 +289,34 @@
         "2, m[DP-2], default:true"
       ];
       "$mod" = "SUPER";
+      bindm = [
+        "$mod, mouse:272, movewindow"
+        "$mod, mouse:273, resizewindow"
+      ];
       bind =
         [
+          "$mod, Q, killactive"
+          #"$mod SHIFT, Q, forcekillactive"
+          "$mod, F, fullscreen, 1"
+          "$mod, P, exec, playerctl play-pause"
+          "$mod, equal, exec, playerctl volume +0.01"
+          "$mod, minus, exec, playerctl volume -0.01"
+          "$mod SHIFT, plus, exec, playerctl volume +0.1"
+          "$mod SHIFT, underscore, exec, playerctl volume -0.1"
+          
+          # Apps
           "$mod, E, exec, uwsm app -- nemo"
-          "$mod, F, exec, uwsm app -- google-chrome-stable"
-          "$mod, Q, exec, uwsm app -- kitty"
+          "$mod, B, exec, uwsm app -- google-chrome-stable"
+          "$mod, T, exec, uwsm app -- kitty"
           "$mod, L, exec, uwsm app -- hyprlock"
           "$mod, R, exec, uwsm app -- walker"
+
+          # Named Workspaces
           "$mod, G, focusworkspaceoncurrentmonitor, name:gaming"
           "$mod SHIFT, G, movetoworkspace, name:gaming"
         ]
         ++ (
-          # Workspaces
+          # Numbered Workspaces
           builtins.concatLists (
             builtins.genList (i:
               let ws = i + 1;
@@ -349,6 +365,8 @@
       # exec-once = ["wpaperd -d"];
     };
   };
+
+  config.services.playerctld.enable = true;
 
   config.services.hyprpaper = {
     enable = true;

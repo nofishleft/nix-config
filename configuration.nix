@@ -97,6 +97,7 @@
     # Git things
     git
     gh
+    playerctl
 
     google-chrome
     phinger-cursors
