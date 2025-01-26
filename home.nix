@@ -164,11 +164,19 @@
       layout = {
         "bar.layouts" = {
           "0" = {
-            left = [ "dashboard" "workspaces" ];
+            left = [ "dashboard" "workspaces" "windowtitle" ];
             middle = [ "media" ];
-            right = [ "volume" "systray" "notifications" ];
+            right = [ "storage" "ram" "cpu" "network" "volume" "systray" "clock" "notifications" ];
+          };
+          "*" = {
+            left = [ "dashboard" "workspaces" "windowtitle" ];
+            middle = [ "media" ];
+            right = [ "volume" "systray" "clock" "notifications" ];
           };
         };
+      };
+      override = {
+        bar.systray.ignore = [ "nm-applet" ];
       };
       settings = {
         wallpaper.enable = false;
