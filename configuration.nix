@@ -140,6 +140,9 @@
     youtube-music
     obs-studio
     gitkraken
+    slack
+    anydesk
+    rustdesk
 
     # Themes
     rose-pine-gtk-theme
