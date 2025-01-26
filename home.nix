@@ -311,6 +311,8 @@
           "$mod, minus, exec, playerctl volume -0.01"
           "$mod SHIFT, plus, exec, playerctl volume +0.1"
           "$mod SHIFT, underscore, exec, playerctl volume -0.1"
+          "$mod, S, exec, hyprshot -z -m active"
+          "$mod SHIFT, S, exec, hyprshot -z -m region --clipboard-only"
           
           # Apps
           "$mod, E, exec, uwsm app -- nemo"
