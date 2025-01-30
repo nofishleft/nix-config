@@ -150,6 +150,7 @@
   ] ++ ( with pkgs.jetbrains; [
     clion
     rust-rover
+    gateway
   ]) ++ (with pkgs; lib.optionals config.backlightControl [
     wluma
     brightnessctl
