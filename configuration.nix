@@ -142,14 +142,11 @@
     gitkraken
     slack
     anydesk
-    rustdesk
-    footage
-    handbrake
-    losslesscut-bin
     chatterino7
     wtwitch
     twitch-tui
     tahoma2d
+    kicad
 
     # Themes
     rose-pine-gtk-theme

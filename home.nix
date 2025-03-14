@@ -258,7 +258,7 @@
     enable = true;
     systemd.enable = false;
     plugins = with pkgs.hyprlandPlugins; [
-      hyprbars
+      # hyprbars
     ];
     settings = {
       input.sensitivity = -0.5;
@@ -339,10 +339,8 @@
         );
       monitor = ", 1920x1080, 0x0, 1";
       plugin = {
+        /*
         hyprbars = {
-          /*bar_height = 20;
-          bar_title_enabled = true;
-          hyprbars-button = "rgb(ff4040), 10, 󰖭, hyprctl dispatch killactive";*/
           bar_blur = true;
           bar_height = 24;#38;
           bar_color = "0xdd191724";
@@ -360,6 +358,7 @@
             "rgb(00CA4E), 14, , hyprctl dispatch togglefloating"
           ];
         };
+        */
       };
       misc = {
         disable_hyprland_logo = true;
