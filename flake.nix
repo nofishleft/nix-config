@@ -25,6 +25,10 @@
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-apps = {
+      url = "github:nofishleft/nix-apps";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
@@ -47,6 +51,7 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+          ({config, pkgs, ...}: {nixpkgs.overlays = [(final: prev: {tahoma2d = inputs.nix-apps.packages."x86_64-linux".tahoma2d;})];})
           ./hardware-${value}.nix
           ./config-${value}.nix
           ./locale.nix

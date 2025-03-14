@@ -143,6 +143,13 @@
     slack
     anydesk
     rustdesk
+    footage
+    handbrake
+    losslesscut-bin
+    chatterino7
+    wtwitch
+    twitch-tui
+    tahoma2d
 
     # Themes
     rose-pine-gtk-theme
@@ -209,6 +216,7 @@
     graphics = {
       enable = true;
       enable32Bit = true;
+      extraPackages = with pkgs; [ rocmPackages.clr.icd ];
     };
   } // lib.mkIf config.useNvidiaGpu {
     nvidia = {
