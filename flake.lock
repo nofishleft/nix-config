@@ -220,7 +220,28 @@
         "hyprpanel": "hyprpanel",
         "nix-apps": "nix-apps",
         "nixcord": "nixcord",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "rose-pine-nixos-tty": "rose-pine-nixos-tty"
+      }
+    },
+    "rose-pine-nixos-tty": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736048138,
+        "narHash": "sha256-iJgpsTlkCC5kKxgWcKX/uMdZMRO4raD2mCaA39evVRg=",
+        "owner": "nofishleft",
+        "repo": "rose-pine-nixos-tty",
+        "rev": "e81ad218947f08e8b838484925731ba8543cf296",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nofishleft",
+        "repo": "rose-pine-nixos-tty",
+        "type": "github"
       }
     },
     "systems": {

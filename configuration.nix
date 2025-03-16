@@ -44,10 +44,56 @@
   config.security.polkit.enable = true;
 
   # Bootloader.
-  config.boot.loader = {
+  /*config.boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
+  };*/
+
+  config.boot.loader = {
+    systemd-boot.enable = false;
+    grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+      useOSProber = true;
+      theme = pkgs.fetchzip {
+        url = "https://github.com/rose-pine/grub/archive/436d8bedf613ec03955845c9f699cf36f3dd51f8.zip";
+        sha256 = "3HhlJQiVkaXdNxU7CIvLuY80HQPURZxCzXLInBnBtmk=";
+      };
+    };
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
   };
+
+  imports = [
+    inputs.rose-pine-nixos-tty.nixosModules.default
+  ];
+
+  config.rose-pine-nixos-tty = {
+    enable = true;
+    variant = "rose-pine";
+  };
+
+  /*config.console.colors = [
+    "191724"
+	  "eb6f92"
+	  "9ccfd8"
+	  "f6c177"
+	  "31748f"
+	  "c4a7e7"
+	  "ebbcba"
+	  "e0def4"
+	  "26233a"
+	  "eb6f92"
+	  "9ccfd8"
+	  "f6c177"
+	  "31748f"
+	  "c4a7e7"
+	  "ebbcba"
+	  "e0def4"
+  ];*/
 
   config.networking = {
     hostName = config.hostName;

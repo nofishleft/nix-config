@@ -29,6 +29,10 @@
       url = "github:nofishleft/nix-apps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rose-pine-nixos-tty = {
+      url = "github:nofishleft/rose-pine-nixos-tty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
