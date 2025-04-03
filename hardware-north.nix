@@ -12,6 +12,7 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" "i2c-dev" "ddcci_backlight" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.ddcci-driver ];
+  boot.supportedFilesystems = [ "ntfs" ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/102071a3-f501-4037-8ade-398dbea5cc92";
@@ -27,6 +28,16 @@
   fileSystems."/games" = {
     device = "/dev/disk/by-uuid/ef469b24-3f80-4316-b22c-459142074889";
     fsType = "ext4";
+  };
+
+  fileSystems."/k1lin" = {
+    device = "/dev/disk/by-uuid/997494d0-36e3-ab98-f797-efedd1bca987";
+    fsType = "ext4";
+  };
+
+  fileSystems."/k1win" = {
+    device = "/dev/disk/by-uuid/4A077D5C46CBCCE1";
+    fsType = "ntfs";
   };
 
   swapDevices = [ ];

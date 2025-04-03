@@ -150,6 +150,10 @@
     networkmanagerapplet
 
     libsForQt5.qt5.qtwayland
+    kdePackages.qtwayland
+
+    # Vulkan
+    # vulkan-loader
 
     greetd.greetd
     # Window title bar
@@ -193,6 +197,11 @@
     twitch-tui
     tahoma2d
     kicad
+    adwaita-icon-theme
+    gtk3
+    cemu
+    audacity
+    openscad
 
     # Themes
     rose-pine-gtk-theme
@@ -212,6 +221,7 @@
   config.programs.steam.enable = config.gaming;
   config.programs.gamescope.enable = config.gaming;
   config.programs.gamemode.enable = config.gaming;
+  config.programs.dconf.enable = true;
 
   config.programs.direnv.enable = true;
 
@@ -272,7 +282,12 @@
         offload.enable = true;
       } // config.nvidiaBusIds;
     };
-  };
+  };/* // lib.mkIf (!config.useNvidiaGpu) {
+    graphics = {
+      extraPackages = [ pkgs.amdvlk ];
+      extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+    };
+  };*/
 
   # Required for home.persistence.*.allowOther
   config.programs.fuse.userAllowOther = true;
