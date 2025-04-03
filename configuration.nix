@@ -223,6 +223,13 @@
   config.programs.gamemode.enable = config.gaming;
   config.programs.dconf.enable = true;
 
+  config.xdg.mime = {
+    defaultApplications = {
+      "inode/directory" = "nemo.desktop";
+      "application/x-gnome-saved-search" = "nemo.desktop";
+    };
+  };
+
   config.programs.direnv.enable = true;
 
   #config.programs.steam = {

@@ -467,6 +467,9 @@
       cursor-theme = "phinger-cursors-light";
       #color-scheme = "prefer-dark";
     };
+    "org/cinnamon/desktop/default-applications/terminal" = {
+      exec = "${pkgs.kitty}/bin/kitty";
+    };
   };
   
   config.gtk = {
