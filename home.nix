@@ -160,8 +160,8 @@
       #systemd.enable = true;
       hyprland.enable = true;
       overwrite.enable = true;
-      theme = "rose_pine";
-      layout = {
+      settings.theme.name = "rose_pine";
+      settings.layout = {
         "bar.layouts" = {
           "0" = {
             left = [ "dashboard" "workspaces" "windowtitle" ];
