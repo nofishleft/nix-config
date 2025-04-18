@@ -261,14 +261,18 @@
       # hyprbars
     ];
     settings = {
-      input.sensitivity = -0.5;
+      input = {
+        sensitivity = -0.5;
+        follow_mouse = 2;
+      };
       source = [ "/home/phush/.config/hypr/rose-pine.conf" ];
       general = {
         monitor = [
           "DP-1, 3440x1440@144, 0x0, 1"
           "DP-2, 1920x1080@60, -1920x360, 1"
         ];
-        "col.active_border" = "$rose $pine $love $iris 90deg";
+        "border_size" = 3;
+        "col.active_border" = "$rose";
         "col.inactive_border" = "$muted";
       };
       decoration = {
@@ -283,14 +287,20 @@
         };*/
       };
       windowrulev2 = [
-        "workspace name:gaming, initialClass:gamescope"
-        "workspace name:gaming, initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
         "workspace 3, initialTitle:^(Flawless Widescreen.*)"
         "float, initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
         "maxsize 1920 1080, workspace:name:gaming, initialClass:yad"
         "float, workspace:name:gaming, initialClass:yad"
         "fullscreen, workspace:name:gaming, initialClass:gamescope"
-      ];
+      ] ++ (builtins.concatMap (x: ["workspace name:gaming, ${x}" "monitor DP-1, ${x}"]) [
+        "initialClass:gamescope"
+        "initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
+        "initialClass:dota2"
+      ]) ++ (builtins.concatMap (x: ["workspace 2, ${x}" "monitor DP-2, ${x}"]) [
+        "initialClass:Slack"
+        "initialClass:vesktop"
+        "initialClass:com.github.th_ch.youtube_music"
+      ]);
       workspace = [
         "name:gaming, m[DP-1], rounding:false, decorate:false, shadow:false, gapsin:0, gapsout:0, border:false"
         "1, m[DP-1], default:true"
@@ -324,6 +334,16 @@
           # Named Workspaces
           "$mod, G, focusworkspaceoncurrentmonitor, name:gaming"
           "$mod SHIFT, G, movetoworkspace, name:gaming"
+
+          "$mod, left, movefocus, l"
+          "$mod, right, movefocus, r"
+          "$mod, up, movefocus, u"
+          "$mod, down, movefocus, d"
+
+          "$mod SHIFT, left, movewindow, l"
+          "$mod SHIFT, right, movewindow, r"
+          "$mod SHIFT, up, movewindow, u"
+          "$mod SHIFT, down, movewindow, d"
         ]
         ++ (
           # Numbered Workspaces
