@@ -216,6 +216,7 @@
     ddcutil
   ]) ++ (with pkgs; lib.optionals config.gaming [
     steamtinkerlaunch
+    prismlauncher
   ]);
 
   config.programs.steam.enable = config.gaming;

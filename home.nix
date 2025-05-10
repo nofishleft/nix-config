@@ -154,8 +154,166 @@
       enableCompletion = true;
     };
     hyprcursor-phinger.enable = true;
-    hyprpanel = {
+    waybar = {
       enable = true;
+      settings.mainBar = {
+        output = ["DP-2"];
+        layer = "top";
+        /*width = 36;*/
+        position = "right";
+        reload_style_on_change = true;
+        modules-left = ["hyprland/workspaces"];
+        modules-center = ["mpris"];
+        modules-right = ["tray" "clock#time" "clock#date"];
+        "hyprland/workspaces" = {
+          format = "{icon}";
+          format-icons = {
+            /*"1" = builtins.fromJSON '' "\udb82\udf3a" '';
+            "2" = builtins.fromJSON '' "\udb82\udf3b" '';
+            "3" = builtins.fromJSON '' "\udb82\udf3c" '';
+            "4" = builtins.fromJSON '' "\udb82\udf3d" '';
+            "gaming" = builtins.fromJSON '' "\udb80\ude96" '';*/
+          };
+          all-outputs = true;
+          # ignore-workspaces = ["gaming"];
+        };
+        /*"hyprland/window" = {
+          format = "";
+          icon = true;
+          icon-size = 24;
+        };*/
+        "mpris" = {
+          format = "{status_icon}";
+          player-icons = {
+            "default" = builtins.fromJSON '' "\udb81\udf5a" '';
+            "youtube-music" = builtins.fromJSON '' "\udb81\uddc3" '';
+            "google-chrome" = builtins.fromJSON '' "\udb80\udeaf" '';
+            "chromium" = builtins.fromJSON '' "\udb80\udeaf" '';
+          };
+          status-icons = {
+            "playing" = builtins.fromJSON '' "\uf04b" '';
+            "paused" = builtins.fromJSON '' "\uf04c" '';
+            "stopped" = builtins.fromJSON '' "\uf04d" '';
+          };
+        };
+        "gamemode" = {
+          use-icon = false;
+          tooltip = false;
+          hide-not-running = true;
+          glyph = builtins.fromJSON '' "\udb80\ude97" '';
+        };
+        "clock#time" = {
+          format = "{0:%H}\n{0:%M}";
+          tooltip = false;
+        };
+        "clock#date" = {
+          format = "{0:%a%n%b}";
+          tooltip = true;
+          tooltip-format = "<tt><small>{calendar}</small></tt>";
+          calendar = {
+            mode = "month";
+            mode-mon-col = 3;
+            on-scroll = 1;
+            weeks-pos = "left";
+            format = {
+              months = "<span color='#ffead3'><b>{}</b></span>";
+              days = "<span color='#ecc6d9'><b>{}</b></span>";
+              weeks = "<span color='#99ffdd'><b>W{}</b></span>";
+              weekdays = "<span color='#ffcc66'><b>{}</b></span>";
+              today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+            };
+          };
+          actions = {
+            on-scroll-up = "shift_down";
+            on-scroll-down = "shift_up";
+            on-click = "mode";
+            on-click-right = "shift_reset";
+          };
+        };
+      };
+      style = ''
+        @define-color base #191724;
+        @define-color surface #1f1d2e;
+        @define-color overlay #26233a;
+        @define-color muted #6e6a86;
+        @define-color subtle #908caa;
+        @define-color text #e0def4;
+        @define-color love #eb6f92;
+        @define-color gold #f6c177;
+        @define-color rose #ebbcba;
+        @define-color pine #31748f;
+
+
+        * {
+          font-size: 16px;
+          font-family: CaskaydiaCove NF;
+          min-width: 8px;
+          padding: 0px;
+        }
+
+        window#waybar {
+          background: rgba(0,0,0,0);
+          color: @text;
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+
+        .module {
+          margin: 8px 0 8px 0;
+          padding: 4px 0 4px 0;
+
+          background: @base;
+          border: 3px solid @muted;
+          border-radius: 8px;
+          min-width: 36px;
+          min-height: 36px;
+        }
+
+        .modules-left,
+        .modules-center,
+        .modules-right {
+          margin-right: 8px;
+          margin-left: 0;
+        }
+
+        .modules-left {
+          margin-top: 12px;
+          margin-bottom: 0;
+        }
+
+        .modules-right {
+          margin-top: 0;
+          margin-bottom: 12px;
+        }
+
+        #workspaces,
+        #mpris,
+        #tray,
+        #clock {
+          background: @base;
+        }
+
+        #mpris {
+          padding: 0;
+        }
+
+        #tray {
+          padding: 8px 0 8px 0;
+        }
+
+        #workspaces button {
+          padding: 0 0.5em;
+          font-size: 24px;
+        }
+
+        tooltip {
+          border: 1px solid @muted;
+          background-color: @surface;
+        }
+      '';
+    };
+    hyprpanel = {
+      enable = false;
       overlay.enable = true;
       #systemd.enable = true;
       hyprland.enable = true;
@@ -289,10 +447,10 @@
       windowrulev2 = [
         "workspace 3, initialTitle:^(Flawless Widescreen.*)"
         "float, initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
-        "maxsize 1920 1080, workspace:name:gaming, initialClass:yad"
-        "float, workspace:name:gaming, initialClass:yad"
-        "fullscreen, workspace:name:gaming, initialClass:gamescope"
-      ] ++ (builtins.concatMap (x: ["workspace name:gaming, ${x}" "monitor DP-1, ${x}"]) [
+        "maxsize 1920 1080, workspace:name:G, initialClass:yad"
+        "float, workspace:name:G, initialClass:yad"
+        "fullscreen, workspace:name:G, initialClass:gamescope"
+      ] ++ (builtins.concatMap (x: ["workspace name:G, ${x}" "monitor DP-1, ${x}"]) [
         "initialClass:gamescope"
         "initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
         "initialClass:dota2"
@@ -302,7 +460,7 @@
         "initialClass:com.github.th_ch.youtube_music"
       ]);
       workspace = [
-        "name:gaming, m[DP-1], rounding:false, decorate:false, shadow:false, gapsin:0, gapsout:0, border:false"
+        "name:G, m[DP-1], rounding:false, decorate:false, shadow:false, gapsin:0, gapsout:0, border:false"
         "1, m[DP-1], default:true"
         "2, m[DP-2], default:true"
       ];
@@ -332,8 +490,8 @@
           "$mod, R, exec, uwsm app -- walker"
 
           # Named Workspaces
-          "$mod, G, focusworkspaceoncurrentmonitor, name:gaming"
-          "$mod SHIFT, G, movetoworkspace, name:gaming"
+          "$mod, G, focusworkspaceoncurrentmonitor, name:G"
+          "$mod SHIFT, G, movetoworkspace, name:G"
 
           "$mod, left, movefocus, l"
           "$mod, right, movefocus, r"
@@ -389,6 +547,7 @@
         "uwsm app -- walker --gapplication.service"
         "bash /home/phush/.config/hm-impermanent.sh"
         "systemctl --user enable --now hyprpolkitagent.service"
+        "uwsm app -- waybar"
       ];
       # exec-once = ["swww-daemon"];
       # exec-once = ["wpaperd -d"];
