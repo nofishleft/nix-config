@@ -164,24 +164,13 @@
         reload_style_on_change = true;
         modules-left = ["hyprland/workspaces"];
         modules-center = ["mpris"];
-        modules-right = ["tray" "clock#time" "clock#date"];
+        modules-right = ["privacy" "tray" "clock#time" "clock#date"];
         "hyprland/workspaces" = {
           format = "{icon}";
           format-icons = {
-            /*"1" = builtins.fromJSON '' "\udb82\udf3a" '';
-            "2" = builtins.fromJSON '' "\udb82\udf3b" '';
-            "3" = builtins.fromJSON '' "\udb82\udf3c" '';
-            "4" = builtins.fromJSON '' "\udb82\udf3d" '';
-            "gaming" = builtins.fromJSON '' "\udb80\ude96" '';*/
           };
           all-outputs = true;
-          # ignore-workspaces = ["gaming"];
         };
-        /*"hyprland/window" = {
-          format = "";
-          icon = true;
-          icon-size = 24;
-        };*/
         "mpris" = {
           format = "{status_icon}";
           player-icons = {
@@ -195,12 +184,6 @@
             "paused" = builtins.fromJSON '' "\uf04c" '';
             "stopped" = builtins.fromJSON '' "\uf04d" '';
           };
-        };
-        "gamemode" = {
-          use-icon = false;
-          tooltip = false;
-          hide-not-running = true;
-          glyph = builtins.fromJSON '' "\udb80\ude97" '';
         };
         "clock#time" = {
           format = "{0:%H}\n{0:%M}";
@@ -474,6 +457,7 @@
           "$mod, Q, killactive"
           #"$mod SHIFT, Q, forcekillactive"
           "$mod, F, fullscreen, 1"
+          "$mod SHIFT, F, togglefloating, active"
           "$mod, P, exec, playerctl play-pause"
           "$mod, equal, exec, playerctl volume +0.01"
           "$mod, minus, exec, playerctl volume -0.01"
@@ -491,6 +475,7 @@
 
           # Named Workspaces
           "$mod, G, focusworkspaceoncurrentmonitor, name:G"
+          #"$mod, G, moveworkspacetomonitor, name:G DP-1"
           "$mod SHIFT, G, movetoworkspace, name:G"
 
           "$mod, left, movefocus, l"
@@ -547,6 +532,7 @@
         "uwsm app -- walker --gapplication.service"
         "bash /home/phush/.config/hm-impermanent.sh"
         "systemctl --user enable --now hyprpolkitagent.service"
+        "uwsm app -- pasystray"
         "uwsm app -- waybar"
       ];
       # exec-once = ["swww-daemon"];
@@ -672,8 +658,16 @@
     };
     gtk3.extraConfig = {
       #gtk-application-prefer-dark-theme = true;
+      gtk-theme-name = "rose-pine";
       gtk-key-theme-name = "rose-pine";
       gtk-icon-theme-name = "rose-pine";
+      gtk-cursor-theme-name = "phinger-cursors-light";
+    };
+    gtk4.extraConfig = {
+      gtk-theme-name = "rose-pine";
+      #gtk-key-theme-name = "rose-pine";
+      gtk-icon-theme-name = "rose-pine";
+      gtk-cursor-theme-name = "phinger-cursors-light";
     };
   };
 

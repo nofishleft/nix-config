@@ -143,7 +143,9 @@
     # Git things
     git
     gh
+
     playerctl
+    pasystray
 
     google-chrome
     phinger-cursors
@@ -202,6 +204,10 @@
     cemu
     audacity
     openscad
+    godot
+    mpv
+    vivaldi
+    celeste
 
     # Themes
     rose-pine-gtk-theme
