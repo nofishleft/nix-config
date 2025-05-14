@@ -1,9 +1,7 @@
 { config, pkgs, lib, inputs, ...}: {
   imports = [
-    inputs.hyprpanel.homeManagerModules.hyprpanel
     inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
-    inputs.nixcord.homeManagerModules.nixcord
-    /*inputs.impermanence.homeManagerModules.impermanence*/
+    inputs.nixcord.homeModules.nixcord
     ./modules/youtube-music.nix
   ];
 
@@ -35,28 +33,6 @@
     HYPRCURSOR_THEME = "phinger-cursors-light";
     HYPRCURSOR_SIZE = "24";
   };
-
-  /*config.home.persistence."/persistent/home/phush" = {
-    directories = [
-      "Downloads"
-      "Music"
-      "Pictures"
-      "Documents"
-      "Videos"
-      ".gnupg"
-      ".config/gh"
-      ".config/vesktop/sessionData"
-      ".config/google-chrome"
-      ".local/share/keyrings"
-      "nix-config"
-      "Repos"
-    ];
-    files = [
-      ".gitconfig"
-      ".nvidia-settings-rc"
-    ];
-    allowOther = true;
-  };*/
 
   config.programs.nixcord = {
     enable = true;
@@ -295,86 +271,6 @@
         }
       '';
     };
-    hyprpanel = {
-      enable = false;
-      overlay.enable = true;
-      #systemd.enable = true;
-      hyprland.enable = true;
-      overwrite.enable = true;
-      settings.theme.name = "rose_pine";
-      settings.layout = {
-        "bar.layouts" = {
-          "0" = {
-            left = [ "dashboard" "workspaces" "windowtitle" ];
-            middle = [ "media" ];
-            right = [ "storage" "ram" "cpu" "network" "volume" "systray" "clock" "notifications" ];
-          };
-          "*" = {
-            left = [ "dashboard" "workspaces" "windowtitle" ];
-            middle = [ "media" ];
-            right = [ "volume" "systray" "clock" "notifications" ];
-          };
-        };
-      };
-      override = {
-        bar.systray.ignore = [ "nm-applet" ];
-      };
-      settings = {
-        wallpaper.enable = false;
-        scalingPriority = "hyprland";
-        bar.launcher.autoDetectIcon = true;
-        bar.workspaces.show_icons = true;
-        menus.clock = {
-          time = {
-            military = true;
-            hideSeconds = true;
-          };
-          weather.unit = "metric";
-        };
-        menus.dashboard.powermenu.avatar.image = "/home/phush/.config/avatars/meiyaSit.png";
-        menus.dashboard.directories.enabled = false;
-        menus.dashboard.stats.enable_gpu = false;
-        menus.dashboard.shortcuts.left = {
-          shortcut1 = {
-            icon = builtins.fromJSON '' "\uf268" '';
-            tooltip = "Chrome";
-            command = "uwsm app -- google-chrome-stable";
-          };
-          shortcut2 = {
-            icon = builtins.fromJSON '' "\uDB80\uDF86" ''; # F0386
-            tooltip = "YT Music";
-            command = "uwsm app -- youtube-music";
-          };
-          shortcut3 = {
-            icon = builtins.fromJSON '' "\uf1ff" '';
-            tooltip = "Discord";
-            command = "uwsm app -- vesktop";
-          };
-          shortcut4 = {
-            icon = builtins.fromJSON '' "\uf422" '';
-            tooltip = "Search";
-            command = "uwsm app -- walker";
-          };
-        };
-        menus.dashboard.shortcuts.right = {
-          shortcut1 = {
-            icon = builtins.fromJSON '' "\uF1FB" '';
-            tooltip = "Color Picker";
-            command = "sleep 0.5 && uwsm app -- hyprpicker -a";
-          };
-          shortcut3 = {
-            icon = builtins.fromJSON '' "\uDB80\uDD00" '';
-            tooltip = "Screenshot";
-            command = "sleep 0.5 && uwsm app -- hyprshot --freeze -m active";
-          };
-        };
-        theme.bar.transparent = true;
-        theme.font = {
-          name = "CaskaydiaCove NF";
-          size = "16px";
-        };
-      };
-    };
   };
 
   config.home.file."./.config/hm-impermanent.sh" = {
@@ -502,41 +398,18 @@
         );
       monitor = ", 1920x1080, 0x0, 1";
       plugin = {
-        /*
-        hyprbars = {
-          bar_blur = true;
-          bar_height = 24;#38;
-          bar_color = "0xdd191724";
-#          bar_color = "rgba(1e1e1edd)";
-          "col.text" = "$rose";#"0xffebbcba";#"$rose";
-          bar_text_size = 10;#12;
-          bar_text_font = "Caskaydia Cove Bold";
-          bar_button_padding = 8;#12;
-          bar_padding = 10;
-          bar_precedence_over_border = true;
-          bar_part_of_window = true;
-          hyprbars-button = [
-            "rgb(FF605C), 14, , hyprctl dispatch killactive"
-            "rgb(FFBD44), 14, , hyprctl dispatch fullscreen 2"
-            "rgb(00CA4E), 14, , hyprctl dispatch togglefloating"
-          ];
-        };
-        */
       };
       misc = {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
       };
       exec-once = [
-        "uwsm app -- hyprpaper"
         "uwsm app -- walker --gapplication.service"
         "bash /home/phush/.config/hm-impermanent.sh"
         "systemctl --user enable --now hyprpolkitagent.service"
         "uwsm app -- pasystray"
         "uwsm app -- waybar"
       ];
-      # exec-once = ["swww-daemon"];
-      # exec-once = ["wpaperd -d"];
     };
   };
 

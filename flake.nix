@@ -9,14 +9,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    /*impermanence = {
-      url = "github:nix-community/impermanence";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };*/
-    hyprpanel = {
-      url = "github:Jas-SinghFSU/HyprPanel";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     hyprcursor-phinger = {
       url = "github:Jappie3/hyprcursor-phinger";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -185,7 +185,7 @@
     # CLI Documentation search for Nix
     manix
 
-    neofetch
+    fastfetch
     btop
 
     # Gui Apps
@@ -207,7 +207,7 @@
     godot
     mpv
     vivaldi
-    celeste
+    insync
 
     # Themes
     rose-pine-gtk-theme
