@@ -208,6 +208,10 @@
     mpv
     vivaldi
     insync
+    libreoffice-qt6-fresh
+    zed-editor-fhs
+    kdePackages.kdenlive
+    drawio
 
     # Themes
     rose-pine-gtk-theme
