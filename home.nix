@@ -34,6 +34,8 @@
     HYPRCURSOR_SIZE = "24";
   };
 
+  config.services.arrpc.enable = true;
+
   config.programs.nixcord = {
     enable = true;
     discord = {
@@ -60,12 +62,23 @@
       disableMinSize = true;
       frameless = true;
       plugins = {
+        /*betterSettings = {
+          enable = true;
+          disableFade = true;
+          organizeMenu = true;
+          eagerLoad = true;
+        };*/
+        customIdle = {
+          enable = true;
+          idleTimeout = 0.0;
+        };
         gameActivityToggle.enable = true;
         gifPaste.enable = true;
         keepCurrentChannel.enable = true;
         mentionAvatars.enable = true;
         messageLatency.enable = true;
         messageLogger.enable = true;
+        mutualGroupDMs.enable = true;
         newGuildSettings = {
           enable = true;
           messages = "only@Mentions";
@@ -96,10 +109,6 @@
         reviewDB.enable = true;
         sendTimestamps.enable = true;
         shikiCodeblocks.enable = true;
-        showHiddenChannels = {
-          enable = true;
-          showMode = "muted";
-        };
         showMeYourName = {
           enable = true;
           mode = "nick-user";
@@ -112,12 +121,28 @@
           contextMenu = true;
           isEnabled = false;
         };
+        textReplace = {
+          enable = true;
+          regexRules = [
+            {
+              find = "/https:\\/\\/x\\.com\\/([^\\/]+\\/status\\/[0-9]+)/";
+              replace = "https://vxtwitter.com/$1";
+              onlyIfIncludes = "";
+            }
+            {
+              find = "/https:\\/\\/twitter\\.com\\/([^\\/]+\\/status\\/[0-9]+)/";
+              replace = "https://vxtwitter.com/$1";
+              onlyIfIncludes = "";
+            }
+          ];
+        };
         unindent.enable = true;
         userVoiceShow.enable = true;
         validReply.enable = true;
         validUser.enable = true;
         voiceChatDoubleClick.enable = true;
         viewRaw.enable = true;
+        webRichPresence.enable = true;
         webScreenShareFixes.enable = true;
       };
     };
