@@ -36,6 +36,29 @@
 
   config.services.arrpc.enable = true;
 
+  config.programs.zed-editor = {
+    enable = true;
+    extensions = [
+      "nix"
+    ];
+    themes =
+      let
+        rose-pine-tarball = builtins.fetchTarball {
+          url = "https://github.com/rose-pine/zed/archive/refs/tags/v1.3.1.tar.gz";
+          sha256 = "1hn3ayppx0bqqypycrzk2v4773z112z6klm9b7yqarlh9v7v3ap2";
+        };
+      in {
+        rose-pine = builtins.readFile "${rose-pine-tarball}/themes/rose-pine.json";
+      };
+    userSettings = {
+      theme = {
+        mode = "dark";
+        dark = "Rosé Pine";
+        light = "Rosé Pine";
+      };
+    };
+  };
+
   config.programs.nixcord = {
     enable = true;
     discord = {
@@ -319,7 +342,7 @@
   config.wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
-    plugins = with pkgs.hyprlandPlugins; [
+    plugins = /*with pkgs.hyprlandPlugins;*/ [
       # hyprbars
     ];
     settings = {
@@ -386,7 +409,7 @@
           "$mod SHIFT, underscore, exec, playerctl volume -0.1"
           "$mod, S, exec, hyprshot -z -m active"
           "$mod SHIFT, S, exec, hyprshot -z -m region --clipboard-only"
-          
+
           # Apps
           "$mod, E, exec, uwsm app -- nemo"
           "$mod, B, exec, uwsm app -- vivaldi"
@@ -445,7 +468,7 @@
     settings = {
       ipc = true;
       splash = false;
-      
+
       preload = [
  #       "/home/phush/.config/wallpapers/110bpm_1080p.png"
         "/home/phush/.config/wallpapers/cyberfomx_1080p.png"
@@ -534,7 +557,7 @@
       exec = "${pkgs.kitty}/bin/kitty";
     };
   };
-  
+
   config.gtk = {
     enable = true;
     theme = {
@@ -607,7 +630,7 @@
       set autoindent
       set number
       set cursorline
-      
+
       autocmd FileType nix setlocal smartindent shiftwidth=2 tabstop=2 softtabstop=0 expandtab signcolumn=yes:1
     '';
     extraLuaConfig = ''

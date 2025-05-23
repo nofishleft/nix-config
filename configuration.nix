@@ -106,11 +106,11 @@
     isNormalUser = true;
     description = "phush";
     extraGroups = [ "networkmanager" "wheel" "i2c" "video" ];
-    packages = with pkgs; [];
+    packages = /*with pkgs;*/ [];
     shell = pkgs.bash;
 #    shell = pkgs.nushell;
   };
-  
+
   config.home-manager = {
     backupFileExtension = "hm-backup";
     extraSpecialArgs = { inherit inputs; };
@@ -125,10 +125,14 @@
     # Shells
     bash
     nushell
-  
+
     # Util
     gparted
     ntfs3g
+
+    # Nix Lsps
+    nixd
+    nil
 
     wineWowPackages.waylandFull
 
