@@ -389,7 +389,7 @@
           
           # Apps
           "$mod, E, exec, uwsm app -- nemo"
-          "$mod, B, exec, uwsm app -- google-chrome-stable"
+          "$mod, B, exec, uwsm app -- vivaldi"
           "$mod, T, exec, uwsm app -- kitty"
           "$mod, L, exec, uwsm app -- hyprlock"
           "$mod, R, exec, uwsm app -- walker"

@@ -126,15 +126,7 @@
     bash
     nushell
   
-    # Editor
-    vim
-    neovim
-
     # Util
-    pciutils
-    wget
-    jq # Helps with json files
-    ddcutil
     gparted
     ntfs3g
 
@@ -143,13 +135,16 @@
     # Git things
     git
     gh
+    gitui
+    delta
+    gitkraken
 
+    # Stuff for Tray/Bar
     playerctl
     pasystray
-
-    google-chrome
-    phinger-cursors
     networkmanagerapplet
+
+    phinger-cursors
 
     libsForQt5.qt5.qtwayland
     kdePackages.qtwayland
@@ -185,33 +180,47 @@
     # CLI Documentation search for Nix
     manix
 
+    # Cli
+    pciutils
+    wget
+    jq
+    ddcutil
     fastfetch
+    wtwitch
+    streamlink
+    gpu-screen-recorder
+
+    # Tui Apps
+    vim
+    neovim
     btop
+    ncdu
+    twitch-tui
+    ytui-music
+
+    adwaita-icon-theme
+    gtk3
 
     # Gui Apps
     youtube-music
     obs-studio
-    gitkraken
     slack
     anydesk
     chatterino7
-    wtwitch
-    twitch-tui
-    tahoma2d
-    kicad
-    adwaita-icon-theme
-    gtk3
-    cemu
-    audacity
+    tahoma2d # Animation editor
+    kicad # PCB Creation
+    cemu # Wii U Emulation
+    audacity # Music editor
     openscad
-    godot
-    mpv
-    vivaldi
-    insync
+    godot # Game engine
+    mpv # Video player
+    vivaldi # Browser
+    insync # GDrive Sync
     libreoffice-qt6-fresh
-    zed-editor-fhs
-    kdePackages.kdenlive
-    drawio
+    zed-editor
+    kdePackages.kdenlive # Video editor
+    drawio # Diagrams
+    drawing # Gnome image editor
 
     # Themes
     rose-pine-gtk-theme
