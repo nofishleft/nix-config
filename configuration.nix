@@ -201,6 +201,8 @@
     ncdu
     twitch-tui
     ytui-music
+    jammer
+    ytermusic
 
     adwaita-icon-theme
     gtk3

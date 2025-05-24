@@ -47,7 +47,13 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          ({config, pkgs, ...}: {nixpkgs.overlays = [(final: prev: {tahoma2d = inputs.nix-apps.packages."x86_64-linux".tahoma2d;})];})
+          ({config, pkgs, ...}: {
+            nixpkgs.config.allowUnfree = true;
+            nixpkgs.overlays = [(final: prev: {
+              tahoma2d = inputs.nix-apps.packages."x86_64-linux".tahoma2d;
+              jammer = inputs.nix-apps.packages."x86_64-linux".jammer;
+            })];
+          })
           ./hardware-${value}.nix
           ./config-${value}.nix
           ./locale.nix
