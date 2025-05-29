@@ -242,6 +242,11 @@
   ]) ++ (with pkgs; lib.optionals config.gaming [
     steamtinkerlaunch
     prismlauncher
+    lutris
+    protonup-qt
+    protonplus
+    protonup-ng
+    wine-staging
   ]);
 
   config.programs.steam.enable = config.gaming;
