@@ -143,9 +143,12 @@
     delta
     gitkraken
 
+    appimage-run
+
     # Stuff for Tray/Bar
     playerctl
     pasystray
+      pavucontrol
     networkmanagerapplet
 
     phinger-cursors
@@ -193,6 +196,10 @@
     wtwitch
     streamlink
     gpu-screen-recorder
+    eza # ls alternative
+    dust # du alternative
+    bat # cat alternative
+    ripgrep # grep alternative
 
     # Tui Apps
     vim
@@ -203,6 +210,7 @@
     ytui-music
     jammer
     ytermusic
+    gitui
 
     adwaita-icon-theme
     gtk3
@@ -227,9 +235,23 @@
     kdePackages.kdenlive # Video editor
     drawio # Diagrams
     drawing # Gnome image editor
+    blockbench
 
     # Themes
-    rose-pine-gtk-theme
+    (rose-pine-gtk-theme.overrideAttrs (oldAttrs: {
+      installPhase = ''
+        runHook preInstall
+
+        mkdir -p $out/share/themes/rose-pine{,-dawn,-moon}/
+
+        variants=("rose-pine" "rose-pine-dawn" "rose-pine-moon")
+        for n in "''${variants[@]}"; do
+          cp -r $src/gtk3/"''${n}"-gtk/* $out/share/themes/"''${n}"
+        done
+
+        runHook postInstall
+      '';
+    }))
     rose-pine-icon-theme
   ] ++ ( with pkgs.jetbrains; [
     clion
@@ -247,12 +269,24 @@
     protonplus
     protonup-ng
     wine-staging
+    winetricks
+    protontricks
   ]);
 
   config.programs.steam.enable = config.gaming;
   config.programs.gamescope.enable = config.gaming;
   config.programs.gamemode.enable = config.gaming;
   config.programs.dconf.enable = true;
+
+  config.programs.appimage = {
+    enable = true;
+    package = pkgs.appimage-run.override {
+      extraPkgs = pkgs: [
+        pkgs.icu
+        pkgs.libxcrypt-legacy
+      ];
+    };
+  };
 
   config.xdg.mime = {
     defaultApplications = {

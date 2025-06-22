@@ -187,8 +187,8 @@
         position = "right";
         reload_style_on_change = true;
         modules-left = ["hyprland/workspaces"];
-        modules-center = ["mpris"];
-        modules-right = ["privacy" "tray" "clock#time" "clock#date"];
+        modules-center = ["mpris" "privacy"];
+        modules-right = ["tray" "clock#time" "clock#date"];
         "hyprland/workspaces" = {
           format = "{icon}";
           format-icons = {
@@ -208,6 +208,10 @@
             "paused" = builtins.fromJSON '' "\uf04c" '';
             "stopped" = builtins.fromJSON '' "\uf04d" '';
           };
+        };
+        "privacy" = {
+          icon-size = 16;
+          icon-spacing = 4;
         };
         "clock#time" = {
           format = "{0:%H}\n{0:%M}";
@@ -291,6 +295,26 @@
         .modules-right {
           margin-top: 0;
           margin-bottom: 12px;
+        }
+
+        #privacy {
+          margin: 8px 0 8px 0;
+          padding: 4px 0 4px 0;
+
+          background: @base;
+          border: 3px solid @muted;
+          border-radius: 8px;
+
+          min-width: 36px;
+          min-height: 36px;
+        }
+
+        #privacy-item.audio-in {
+          margin-left: 10px;
+        }
+
+        #privacy-item.screenshare {
+          margin-left: 8px;
         }
 
         #workspaces,
@@ -455,7 +479,6 @@
         "uwsm app -- walker --gapplication.service"
         "bash /home/phush/.config/hm-impermanent.sh"
         "systemctl --user enable --now hyprpolkitagent.service"
-        "uwsm app -- pasystray"
         "uwsm app -- waybar"
       ];
     };
