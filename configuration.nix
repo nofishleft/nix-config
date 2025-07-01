@@ -236,6 +236,7 @@
     drawio # Diagrams
     drawing # Gnome image editor
     blockbench
+    beeper
 
     # Themes
     (rose-pine-gtk-theme.overrideAttrs (oldAttrs: {

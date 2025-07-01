@@ -405,6 +405,7 @@
         "initialClass:gamescope"
         "initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
         "initialClass:dota2"
+        "initialClass:steam_app_1172710"
       ]) ++ (builtins.concatMap (x: ["workspace 2, ${x}" "monitor DP-2, ${x}"]) [
         "initialClass:Slack"
         "initialClass:vesktop"
