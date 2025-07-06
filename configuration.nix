@@ -232,7 +232,7 @@
     insync # GDrive Sync
     libreoffice-qt6-fresh
     zed-editor
-    kdePackages.kdenlive # Video editor
+    openshot-qt
     drawio # Diagrams
     drawing # Gnome image editor
     blockbench
