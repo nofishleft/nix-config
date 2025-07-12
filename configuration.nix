@@ -145,6 +145,10 @@
     pinentry-tty
     gitkraken
 
+    # Cloud
+    s3cmd
+    dvc-with-remotes
+
     appimage-run
 
     # Stuff for Tray/Bar
