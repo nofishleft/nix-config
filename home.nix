@@ -186,9 +186,14 @@
         /*width = 36;*/
         position = "right";
         reload_style_on_change = true;
-        modules-left = ["hyprland/workspaces"];
+        modules-left = ["custom/power" "hyprland/workspaces"];
         modules-center = ["mpris" "privacy"];
         modules-right = ["tray" "clock#time" "clock#date"];
+        "custom/power" = {
+          format = builtins.fromJSON '' "\udb81\udc25" '';
+          tooltip = false;
+          on-click = "wlogout --protocol layer-shell";
+        };
         "hyprland/workspaces" = {
           format = "{icon}";
           format-icons = {
@@ -318,14 +323,20 @@
         }
 
         #workspaces,
+        #custom-power,
         #mpris,
         #tray,
         #clock {
           background: @base;
         }
 
+        #custom-power,
         #mpris {
           padding: 0;
+        }
+
+        #custom-power {
+          font-size: 24px;
         }
 
         #tray {
@@ -340,6 +351,57 @@
         tooltip {
           border: 1px solid @muted;
           background-color: @surface;
+        }
+      '';
+    };
+    wlogout = {
+      enable = true;
+      layout = [
+        {
+          label = "shutdown";
+          action = "systemctl poweroff";
+          text = "Shutdown";
+          keybind = "s";
+        }
+        {
+          label = "reboot";
+          action = "systemctl reboot";
+          text = "Reboot";
+          keybind = "r";
+        }
+      ];
+      style = ''
+        window {
+          background: rgba(25, 23, 36, 0.5);
+        }
+        
+        button {
+          color: #e0def4;
+          background-color: #191724;
+
+          border-radius: 8px;
+          border-color: #6e6a86;
+          border-style: solid;
+          border-width: 3px;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 25%;
+
+          margin: 12px;
+        }
+
+        button:hover {
+          background-color: #1f1d2e;
+          border-color: #ebbcba;
+          outline-style: none;
+        }
+        
+        #shutdown {
+          background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
+        }
+
+        #reboot {
+          background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"));
         }
       '';
     };

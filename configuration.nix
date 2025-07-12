@@ -141,6 +141,8 @@
     gh
     gitui
     delta
+    gnupg
+    pinentry-tty
     gitkraken
 
     appimage-run
@@ -181,6 +183,8 @@
     nemo-with-extensions
     # Gui elevation
     hyprpolkitagent
+    # Logout menu
+    wlogout
 
     unzip
 
@@ -227,14 +231,16 @@
     audacity # Music editor
     openscad
     godot # Game engine
+    godot-mono
     mpv # Video player
     vivaldi # Browser
     insync # GDrive Sync
     libreoffice-qt6-fresh
     zed-editor
-    openshot-qt
+    openshot-qt # Video editor
     drawio # Diagrams
     drawing # Gnome image editor
+    blender
     blockbench
     beeper
 
@@ -265,6 +271,7 @@
   ]) ++ (with pkgs; lib.optionals config.gaming [
     steamtinkerlaunch
     prismlauncher
+    bottles
     lutris
     protonup-qt
     protonplus
