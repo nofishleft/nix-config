@@ -1,18 +1,22 @@
+# Set GTK_THEME="Adwaita:dark" for specific apps
+# Usage:
+# nixpkgs.overlays = [(import ./adwaita-dark-apps.nix)];
 let
-  concat = array: (builtins.foldl' (acc: elem: acc + elem + "\n") "" array);
   wrapProgram = program: ''
     wrapProgram $out/bin/${program} --set GTK_THEME "Adwaita:dark"
   '';
-  wrapPrograms = programs: (concat (builtins.map wrapProgram programs));
 in
 final: prev: builtins.mapAttrs
-(name: value:
-  prev."${name}".overrideAttrs (oldAttrs: {
-    postInstall = (oldAttrs.postInstall or "") + (wrapPrograms value);
+(packageName: programs:
+  prev."${packageName}".overrideAttrs (oldAttrs: {
+    postInstall = (builtins.foldl'
+      /*fn*/(acc: elem: acc + elem + "\n")
+      /*init*/(oldAttrs.postInstall or "")
+      /*array*/(builtins.map wrapProgram programs));
   })
 )
 {
-  # usage:
+  # Usage:
   # nameOfPackage = ["listOf" "executables" "inPackage"]
   pavucontrol = ["pavucontrol"];
   handbrake = ["ghb"];
