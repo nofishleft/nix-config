@@ -12,6 +12,8 @@ final: prev: builtins.mapAttrs
   })
 )
 {
+  # usage:
+  # nameOfPackage = ["listOf" "executables" "inPackage"]
   pavucontrol = ["pavucontrol"];
   handbrake = ["ghb"];
 }
