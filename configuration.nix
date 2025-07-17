@@ -247,6 +247,7 @@
     blender
     blockbench
     beeper
+    handbrake
 
     # Themes
     (rose-pine-gtk-theme.overrideAttrs (oldAttrs: {

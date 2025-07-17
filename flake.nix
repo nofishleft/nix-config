@@ -1,6 +1,6 @@
 {
   description = "My flake";
-  
+
   inputs = {
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -49,11 +49,14 @@
         modules = [
           ({config, pkgs, ...}: {
             nixpkgs.config.allowUnfree = true;
-            nixpkgs.overlays = [(final: prev: {
-              tahoma2d = inputs.nix-apps.packages."x86_64-linux".tahoma2d;
-              jammer = inputs.nix-apps.packages."x86_64-linux".jammer-appimage;
-              gamescope = inputs.nix-apps.packages."x86_64-linux".gamescope;
-            })];
+            nixpkgs.overlays = [
+              (final: prev: {
+                tahoma2d = inputs.nix-apps.packages."x86_64-linux".tahoma2d;
+                jammer = inputs.nix-apps.packages."x86_64-linux".jammer-appimage;
+                gamescope = inputs.nix-apps.packages."x86_64-linux".gamescope;
+              })
+              (import ./adwaita-dark-apps.nix)
+            ];
           })
           ./hardware-${value}.nix
           ./config-${value}.nix
