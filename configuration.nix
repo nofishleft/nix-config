@@ -246,8 +246,15 @@
     drawing # Gnome image editor
     blender
     blockbench
-    beeper
-    handbrake
+    beeper # Messaging
+    handbrake # Video transcoding
+    geary # Email
+    kdePackages.okular # Pdf
+    onlyoffice-desktopeditors # Office suite
+    wpsoffice
+    legcord
+
+    nextcloud-client
 
     # Themes
     (rose-pine-gtk-theme.overrideAttrs (oldAttrs: {
@@ -343,10 +350,12 @@
     '';
   };
 */
-  config.fonts.packages = [
-    pkgs.font-awesome
-    pkgs.powerline-fonts
-    pkgs.powerline-symbols
+  config.fonts.packages = with pkgs; [
+    font-awesome
+    powerline-fonts
+    powerline-symbols
+    corefonts
+    vistafonts
   ] ++ (builtins.filter pkgs.lib.isDerivation (builtins.attrValues pkgs.nerd-fonts));
 
 
