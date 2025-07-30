@@ -20,4 +20,5 @@ final: prev: builtins.mapAttrs
   # nameOfPackage = ["listOf" "executables" "inPackage"]
   pavucontrol = ["pavucontrol"];
   handbrake = ["ghb"];
+  parabolic = ["org.nickvision.tubeconverter"];
 }

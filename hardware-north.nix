@@ -30,6 +30,11 @@
     fsType = "ext4";
   };
 
+  fileSystems."/l1games" = {
+    device = "/dev/disk/by-uuid/124d0261-383a-4e09-a8b2-926fd937dd69";
+    fsType = "ext4";
+  };
+
   fileSystems."/k1lin" = {
     device = "/dev/disk/by-uuid/997494d0-36e3-ab98-f797-efedd1bca987";
     fsType = "ext4";

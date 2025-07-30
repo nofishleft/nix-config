@@ -22,6 +22,24 @@
     gaming = lib.mkEnableOption "gaming";
   };
 
+  config.nix.settings = {
+    substituters = [
+      "http://192.168.0.64:8080/phush-north"
+      "https://cache.nixos.org"
+    ];
+    trusted-substituters = [
+      "http://192.168.0.64:8080/phush-north"
+      "https://hydra.nixos.org/"
+    ];
+    trusted-users = [
+      "root"
+      "phush"
+    ];
+    trusted-public-keys = [
+      "phush-north:pYv0MU0I0VhtVPX140EHVL+3tujEJYVwYP5s7bt1bHM= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+    ];
+  };
+
 /*  config.nixpkgs.overlays = [ (final: prev: {
     rose-pine-gtk-theme = prev.rose-pine-gtk-theme.overrideAttrs (old: {
       src = prev.fetchFromGitHub {
@@ -189,6 +207,8 @@
     hyprpolkitagent
     # Logout menu
     wlogout
+    # Widgets
+    eww
 
     unzip
 
@@ -208,6 +228,9 @@
     dust # du alternative
     bat # cat alternative
     ripgrep # grep alternative
+    yt-dlp
+    ytdl-sub
+    dysk # df alt
 
     # Tui Apps
     vim
@@ -253,8 +276,13 @@
     onlyoffice-desktopeditors # Office suite
     wpsoffice
     legcord
+    supersonic-wayland # Jellyfin client
+    jellyfin-media-player
+    qbittorrent
+    parabolic
 
-    nextcloud-client
+    #nextcloud-client
+    attic-client
 
     # Themes
     (rose-pine-gtk-theme.overrideAttrs (oldAttrs: {
