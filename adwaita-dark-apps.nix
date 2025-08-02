@@ -21,4 +21,5 @@ final: prev: builtins.mapAttrs
   pavucontrol = ["pavucontrol"];
   handbrake = ["ghb"];
   parabolic = ["org.nickvision.tubeconverter"];
+  gnome-online-accounts-gtk = ["gnome-online-accounts-gtk"];
 }

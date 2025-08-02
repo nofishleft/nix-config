@@ -473,6 +473,8 @@
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
+  config.services.gnome.gnome-keyring.enable = true;
+
   config.system.stateVersion = "24.11";
 
 }
