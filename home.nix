@@ -40,6 +40,7 @@
     enable = true;
     extensions = [
       "nix"
+      # "odin"
     ];
     themes =
       let
@@ -56,6 +57,16 @@
         dark = "Rosé Pine";
         light = "Rosé Pine";
       };
+      lsp = {
+        nix.binary.path_lookup = true;
+        ols.binary.path_lookup = true;
+      };
+      languages = {
+        "Odin" = {
+          language_servers = ["ols"];
+        };
+      };
+      load_direnv = "shell_hook";
     };
   };
 
@@ -374,7 +385,7 @@
         window {
           background: rgba(25, 23, 36, 0.5);
         }
-        
+
         button {
           color: #e0def4;
           background-color: #191724;
@@ -395,7 +406,7 @@
           border-color: #ebbcba;
           outline-style: none;
         }
-        
+
         #shutdown {
           background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
         }
@@ -448,40 +459,50 @@
       };
       decoration = {
         rounding = 5;
-        /*active_opacity = 1.0;
-        inactive_opacity = 0.8;
-        blur = {
-          enabled = true;
-          size = 8;
-          passes = 1;
-          new_optimizations = true;
-        };*/
       };
-      windowrulev2 = [
-        "workspace 3, initialTitle:^(Flawless Widescreen.*)"
+      windowrulev2 = (builtins.map (x: "monitor DP-1, ${x}") [
+        # DP-1, WS ANY
+        "initialClass:kitty"
+        "initialClass:steam"
+      ]) ++ [
+        # WS G, DP-1
         "float, initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
         "maxsize 1920 1080, workspace:name:G, initialClass:yad"
         "float, workspace:name:G, initialClass:yad"
         "fullscreen, workspace:name:G, initialClass:gamescope"
       ] ++ (builtins.concatMap (x: ["workspace name:G, ${x}" "monitor DP-1, ${x}"]) [
+        # WS G, DP-1
         "initialClass:gamescope"
         "initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
         "initialClass:dota2"
         "initialClass:steam_app_1172710"
-      ]) ++ (builtins.concatMap (x: ["workspace 2, ${x}" "monitor DP-2, ${x}"]) [
+      ]) ++ (builtins.concatMap (x: ["workspace name:H silent, ${x}" "monitor DP-2, ${x}"]) [
+        # WS H, DP-2
         "initialClass:Slack"
         "initialClass:vesktop"
         "initialClass:com.github.th_ch.youtube_music"
-      ]);
+        "initialClass:vivaldi-player.twitch.tv__-Default"
+      ]) ++ [
+        "float, initialClass:deluge, initialTitle:Add URL"
+        "float, initialClass:deluge, initialTitle: Add Torrents (0)"
+      ];
       workspace = [
-        "name:G, m[DP-1], rounding:false, decorate:false, shadow:false, gapsin:0, gapsout:0, border:false"
+        "name:G, m[DP-1], default:false, rounding:false, decorate:false, shadow:false, gapsin:0, gapsout:0, border:false"
+        "name:H, m[DP-2], default:true"
         "1, m[DP-1], default:true"
-        "2, m[DP-2], default:true"
+        "2, m[DP-1], default:false"
+        "3, m[DP-1], default:false"
+        "4, m[DP-1], default:false"
+        "5, m[DP-1], default:false"
+        "6, m[DP-1], default:false"
+        "7, m[DP-1], default:false"
+        "8, m[DP-1], default:false"
+        "9, m[DP-1], default:false"
       ];
       "$mod" = "SUPER";
       bindm = [
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
+        "$mod, mouse:272, movewindow" # Mouse-L
+        "$mod, mouse:273, resizewindow" # Mouse-R
       ];
       bind =
         [
@@ -504,11 +525,7 @@
           "$mod, L, exec, uwsm app -- hyprlock"
           "$mod, R, exec, uwsm app -- walker"
 
-          # Named Workspaces
-          "$mod, G, focusworkspaceoncurrentmonitor, name:G"
-          #"$mod, G, moveworkspacetomonitor, name:G DP-1"
-          "$mod SHIFT, G, movetoworkspace, name:G"
-
+          # Focus
           "$mod, left, movefocus, l"
           "$mod, right, movefocus, r"
           "$mod, up, movefocus, u"
@@ -518,15 +535,34 @@
           "$mod SHIFT, right, movewindow, r"
           "$mod SHIFT, up, movewindow, u"
           "$mod SHIFT, down, movewindow, d"
+
+          "$mod, tab, cyclenext"
+
+          "$mod, A, focusmonitor, DP-2"
+          "$mod, D, focusmonitor, DP-1"
+
+          # Named Workspaces
+          "$mod, G, focusmonitor, DP-1"
+          "$mod, G, focusworkspaceoncurrentmonitor, name:G"
+          "$mod SHIFT, G, movetoworkspace, name:G"
+          "$mod SHIFT, G, moveworkspacetomonitor, name:G DP-1"
+
+          "$mod, H, focusmonitor, DP-2"
+          "$mod, H, focusworkspaceoncurrentmonitor, name:H"
+          "$mod SHIFT, H, movetoworkspace, name:H"
+          "$mod SHIFT, H, moveworkspacetomonitor, name:H DP-2"
         ]
         ++ (
-          # Numbered Workspaces
+          # WS 3+
           builtins.concatLists (
             builtins.genList (i:
-              let ws = i + 1;
+              let
+                ws = i + 1;
               in [
+                "$mod, code:1${toString i}, focusmonitor, DP-1"
                 "$mod, code:1${toString i}, focusworkspaceoncurrentmonitor, ${toString ws}"
                 "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+                "$mod SHIFT, code:1${toString i}, moveworkspacetomonitor, ${toString ws} DP-1"
               ]
             ) 9
           )

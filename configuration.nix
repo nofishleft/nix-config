@@ -54,6 +54,7 @@
   config.boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   config.nixpkgs.config.allowUnfree = true;
+  config.nixpkgs.config.allowUnfreePredicate = (_: true);
   config.nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -191,6 +192,7 @@
     libnotify
     # Terminal
     kitty
+    ghostty
     # Wallpaper
     hyprpaper
     # Runner
@@ -217,6 +219,8 @@
 
     # Cli
     pciutils
+    ookla-speedtest
+    iperf
     wget
     jq
     ddcutil
@@ -225,9 +229,11 @@
     streamlink
     gpu-screen-recorder
     eza # ls alternative
+    lsd # ls alternative
     dust # du alternative
     bat # cat alternative
     ripgrep # grep alternative
+    yazi # file manager
     yt-dlp
     ytdl-sub
     dysk # df alt
@@ -242,6 +248,7 @@
     jammer
     ytermusic
     gitui
+    helix
 
     adwaita-icon-theme
     gtk3
@@ -251,6 +258,7 @@
     obs-studio
     slack
     anydesk
+    rustdesk
     chatterino7
     tahoma2d # Animation editor
     kicad # PCB Creation
@@ -258,7 +266,7 @@
     audacity # Music editor
     openscad
     godot # Game engine
-    godot-mono
+    unityhub
     mpv # Video player
     vivaldi # Browser
     insync # GDrive Sync
@@ -280,6 +288,8 @@
     jellyfin-media-player
     qbittorrent
     parabolic
+    deluge
+    ldtk
 
     #nextcloud-client
     attic-client
@@ -303,6 +313,7 @@
   ] ++ ( with pkgs.jetbrains; [
     clion
     rust-rover
+    intellij
     gateway
   ]) ++ (with pkgs; lib.optionals config.backlightControl [
     wluma
@@ -319,6 +330,7 @@
     wine-staging
     winetricks
     protontricks
+    mangohud
   ]);
 
   config.programs.steam.enable = config.gaming;
