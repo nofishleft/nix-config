@@ -23,4 +23,5 @@ final: prev: builtins.mapAttrs
   parabolic = ["org.nickvision.tubeconverter"];
   gnome-online-accounts-gtk = ["gnome-online-accounts-gtk"];
   cartridges = ["cartridges"];
+  kooha = ["kooha"];
 }

@@ -115,7 +115,7 @@
         mutualGroupDMs.enable = true;
         newGuildSettings = {
           enable = true;
-          messages = "only@Mentions";
+          messages = 1 /*only @ mentions*/;
         };
         noUnblockToJump.enable = true;
         permissionsViewer.enable = true;
@@ -123,7 +123,7 @@
         pictureInPicture.enable = true;
         pinDMs = {
           enable = true;
-          pinOrder = "custom";
+          pinOrder = 1; /*custom*/
         };
         plainFolderIcon.enable = true;
         previewMessage.enable = true;
@@ -145,15 +145,14 @@
         shikiCodeblocks.enable = true;
         showMeYourName = {
           enable = true;
-          mode = "nick-user";
         };
         showTimeoutDuration.enable = true;
         silentMessageToggle.enable = true;
         silentTyping = {
           enable = true;
-          showIcon = true;
-          contextMenu = true;
-          isEnabled = false;
+          chatIcon = true;
+          chatContextMenu = true;
+          enabledGlobally = false;
         };
         textReplace = {
           enable = true;

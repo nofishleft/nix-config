@@ -160,6 +160,8 @@
     nixd
     nil
 
+    encfs
+
     wineWowPackages.waylandFull
 
     # Git things
@@ -246,7 +248,7 @@
     ytdl-sub
     dysk # df alt
     fzf
-
+    
     # Tui Apps
     vim
     neovim
@@ -265,11 +267,12 @@
     # Gui Apps
     youtube-music
     obs-studio
+    kooha
     slack
     anydesk
     rustdesk
     chatterino7
-    tahoma2d # Animation editor
+    #tahoma2d # Animation editor # broken
     kicad # PCB Creation
     cemu # Wii U Emulation
     audacity # Music editor
@@ -281,7 +284,7 @@
     insync # GDrive Sync
     libreoffice-qt6-fresh
     zed-editor
-    openshot-qt # Video editor
+    #openshot-qt # Video editor # broken
     drawio # Diagrams
     drawing # Gnome image editor
     blender
@@ -294,11 +297,15 @@
     wpsoffice
     legcord
     supersonic-wayland # Jellyfin client
-    jellyfin-media-player
+    # jellyfin-media-player # broken
     qbittorrent
     parabolic
     deluge
     ldtk
+
+    kcc # Convert manga
+    kindlegen
+    termpdfpy # View pdf/epub/cbz in terminal
 
     #nextcloud-client
     attic-client
@@ -331,7 +338,7 @@
   ]) ++ (with pkgs; lib.optionals config.gaming [
     steamtinkerlaunch
     prismlauncher
-    #bottles # gamescope broken
+    bottles # gamescope broken
     heroic
     cartridges
     lutris
@@ -345,7 +352,7 @@
   ]);
 
   config.programs.steam.enable = config.gaming;
-  config.programs.gamescope.enable = false; #config.gaming; # gamescope broken
+  config.programs.gamescope.enable = config.gaming; # gamescope broken
   config.programs.gamemode.enable = config.gaming;
   config.programs.dconf.enable = true;
 
@@ -414,7 +421,7 @@
     powerline-fonts
     powerline-symbols
     corefonts
-    vistafonts
+    vista-fonts
   ] ++ (builtins.filter pkgs.lib.isDerivation (builtins.attrValues pkgs.nerd-fonts));
 
 

@@ -57,7 +57,8 @@
               (final: prev: {
                 tahoma2d = inputs.nix-apps.packages."x86_64-linux".tahoma2d;
                 jammer = inputs.nix-apps.packages."x86_64-linux".jammer-appimage;
-                gamescope = inputs.nix-apps.packages."x86_64-linux".gamescope;
+                kindlegen = inputs.nix-apps.packages."x86_64-linux".kindlegen;
+                #gamescope = inputs.nix-apps.packages."x86_64-linux".gamescope;
               })
               (import ./adwaita-dark-apps.nix)
             ];
