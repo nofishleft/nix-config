@@ -24,11 +24,11 @@
 
   config.nix.settings = {
     substituters = [
-      "http://192.168.0.64:8080/phush-north"
+#      "http://192.168.0.64:8080/phush-north"
       "https://cache.nixos.org"
     ];
     trusted-substituters = [
-      "http://192.168.0.64:8080/phush-north"
+#      "http://192.168.0.64:8080/phush-north"
       "https://hydra.nixos.org/"
     ];
     trusted-users = [
