@@ -579,6 +579,7 @@
         "bash /home/phush/.config/hm-impermanent.sh"
         "systemctl --user enable --now hyprpolkitagent.service"
         "uwsm app -- waybar"
+        "uwsm app -- hyprnotify"
       ];
     };
   };
@@ -677,6 +678,10 @@
     };
     "org/cinnamon/desktop/default-applications/terminal" = {
       exec = "${pkgs.kitty}/bin/kitty";
+    };
+    "org/virt-manager/virt-manager/connections" = { #winapps
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
     };
   };
 

@@ -22,4 +22,5 @@ final: prev: builtins.mapAttrs
   handbrake = ["ghb"];
   parabolic = ["org.nickvision.tubeconverter"];
   gnome-online-accounts-gtk = ["gnome-online-accounts-gtk"];
+  cartridges = ["cartridges"];
 }

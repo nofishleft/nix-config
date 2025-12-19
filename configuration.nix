@@ -51,6 +51,10 @@
     });
   }) ];*/
 
+  config.nixpkgs.config.permittedInsecurePackages = [
+    "qtwebengine-5.15.19"
+  ];
+
   config.boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   config.nixpkgs.config.allowUnfree = true;
@@ -124,7 +128,7 @@
   config.users.users.phush = {
     isNormalUser = true;
     description = "phush";
-    extraGroups = [ "networkmanager" "wheel" "i2c" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "i2c" "video" "libvirtd" "kvm" ];
     packages = /*with pkgs;*/ [];
     shell = pkgs.bash;
 #    shell = pkgs.nushell;
@@ -144,6 +148,9 @@
     # Shells
     bash
     nushell
+
+    inputs.winapps.packages."x86_64-linux".winapps
+    inputs.winapps.packages."x86_64-linux".winapps-launcher
 
     # Util
     gparted
@@ -189,6 +196,7 @@
     waybar
     # Notifications
     hyprnotify
+    mako
     libnotify
     # Terminal
     kitty
@@ -237,6 +245,7 @@
     yt-dlp
     ytdl-sub
     dysk # df alt
+    fzf
 
     # Tui Apps
     vim
@@ -244,7 +253,7 @@
     btop
     ncdu
     twitch-tui
-    ytui-music
+    # ytui-music # build-broken
     jammer
     ytermusic
     gitui
@@ -313,7 +322,7 @@
   ] ++ ( with pkgs.jetbrains; [
     clion
     rust-rover
-    intellij
+    idea-ultimate
     gateway
   ]) ++ (with pkgs; lib.optionals config.backlightControl [
     wluma
@@ -322,7 +331,9 @@
   ]) ++ (with pkgs; lib.optionals config.gaming [
     steamtinkerlaunch
     prismlauncher
-    bottles
+    #bottles # gamescope broken
+    heroic
+    cartridges
     lutris
     protonup-qt
     protonplus
@@ -334,7 +345,7 @@
   ]);
 
   config.programs.steam.enable = config.gaming;
-  config.programs.gamescope.enable = config.gaming;
+  config.programs.gamescope.enable = false; #config.gaming; # gamescope broken
   config.programs.gamemode.enable = config.gaming;
   config.programs.dconf.enable = true;
 
@@ -356,6 +367,14 @@
   };
 
   config.programs.direnv.enable = true;
+
+  config.programs.virt-manager.enable = true; # winapps
+  config.users.groups.libvirtd.members = ["phush"];
+  config.virtualisation.libvirtd = {
+    enable = true;
+    qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
+  };
+  config.virtualisation.spiceUSBRedirection.enable = true;
 
   #config.programs.steam = {
   #  enable = true;
