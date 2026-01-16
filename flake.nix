@@ -29,6 +29,10 @@
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vermilion = {
+      url = "github:nofishleft/Vermilion";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
@@ -59,6 +63,7 @@
                 jammer = inputs.nix-apps.packages."x86_64-linux".jammer-appimage;
                 kindlegen = inputs.nix-apps.packages."x86_64-linux".kindlegen;
                 #gamescope = inputs.nix-apps.packages."x86_64-linux".gamescope;
+                vermilion = inputs.vermilion.packages."x86_64-linux".vermilion;
               })
               (import ./adwaita-dark-apps.nix)
             ];

@@ -219,6 +219,7 @@
         "nixcord": "nixcord",
         "nixpkgs": "nixpkgs",
         "rose-pine-nixos-tty": "rose-pine-nixos-tty",
+        "vermilion": "vermilion",
         "winapps": "winapps"
       }
     },
@@ -269,6 +270,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "vermilion": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1766972479,
+        "narHash": "sha256-VGKM3HOqyIgR2T8UZsMgS2yhXuvzwRDH/Vr2eNkgCks=",
+        "owner": "nofishleft",
+        "repo": "Vermilion",
+        "rev": "377ce75846b898dac5d303b2af462a9e65f31ed0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nofishleft",
+        "repo": "Vermilion",
         "type": "github"
       }
     },

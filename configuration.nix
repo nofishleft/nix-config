@@ -22,24 +22,6 @@
     gaming = lib.mkEnableOption "gaming";
   };
 
-  config.nix.settings = {
-    substituters = [
-#      "http://192.168.0.64:8080/phush-north"
-      "https://cache.nixos.org"
-    ];
-    trusted-substituters = [
-#      "http://192.168.0.64:8080/phush-north"
-      "https://hydra.nixos.org/"
-    ];
-    trusted-users = [
-      "root"
-      "phush"
-    ];
-    trusted-public-keys = [
-      "phush-north:pYv0MU0I0VhtVPX140EHVL+3tujEJYVwYP5s7bt1bHM= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-    ];
-  };
-
 /*  config.nixpkgs.overlays = [ (final: prev: {
     rose-pine-gtk-theme = prev.rose-pine-gtk-theme.overrideAttrs (old: {
       src = prev.fetchFromGitHub {
@@ -238,6 +220,7 @@
     wtwitch
     streamlink
     gpu-screen-recorder
+    gpu-screen-recorder-gtk
     eza # ls alternative
     lsd # ls alternative
     dust # du alternative
@@ -266,6 +249,7 @@
 
     # Gui Apps
     youtube-music
+    vermilion
     obs-studio
     kooha
     slack
@@ -284,7 +268,7 @@
     insync # GDrive Sync
     libreoffice-qt6-fresh
     zed-editor
-    #openshot-qt # Video editor # broken
+    openshot-qt # Video editor # broken
     drawio # Diagrams
     drawing # Gnome image editor
     blender
@@ -331,6 +315,9 @@
     rust-rover
     idea-ultimate
     gateway
+    goland
+    webstorm
+    pycharm
   ]) ++ (with pkgs; lib.optionals config.backlightControl [
     wluma
     brightnessctl
@@ -349,7 +336,12 @@
     winetricks
     protontricks
     mangohud
+    r2modman
+    faugus-launcher
+    wowup-cf
   ]);
+
+  config.programs.gpu-screen-recorder.enable = true;
 
   config.programs.steam.enable = config.gaming;
   config.programs.gamescope.enable = config.gaming; # gamescope broken
