@@ -74,7 +74,11 @@
 
   imports = [
     inputs.rose-pine-nixos-tty.nixosModules.default
+    ./work_vpn.nix
   ];
+
+  config.sops.age.keyFile = "/home/phush/.config/sops/age/keys.txt";
+  config.work_vpn.enable = true;
 
   config.rose-pine-nixos-tty = {
     enable = true;
@@ -154,6 +158,9 @@
     gnupg
     pinentry-tty
     gitkraken
+
+    # Sops
+    age
 
     # Python
     uv

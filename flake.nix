@@ -33,6 +33,10 @@
       url = "github:nofishleft/Vermilion";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
@@ -74,6 +78,7 @@
           ./configuration.nix
           inputs.home-manager.nixosModules.default
           self.nixosModules.default
+          inputs.sops-nix.nixosModules.sops
         ];
       }
     ) {
