@@ -155,6 +155,12 @@
     pinentry-tty
     gitkraken
 
+    # Python
+    uv
+
+    claude-code
+    claude-monitor
+
     # Cloud
     s3cmd
     dvc-with-remotes
@@ -289,7 +295,8 @@
 
     kcc # Convert manga
     kindlegen
-    termpdfpy # View pdf/epub/cbz in terminal
+    # broken
+    # termpdfpy # View pdf/epub/cbz in terminal
 
     #nextcloud-client
     attic-client
@@ -339,6 +346,7 @@
     r2modman
     faugus-launcher
     wowup-cf
+    xenia-canary
   ]);
 
   config.programs.gpu-screen-recorder.enable = true;
@@ -347,6 +355,8 @@
   config.programs.gamescope.enable = config.gaming; # gamescope broken
   config.programs.gamemode.enable = config.gaming;
   config.programs.dconf.enable = true;
+
+  config.programs.nix-ld.enable = true;
 
   config.programs.appimage = {
     enable = true;

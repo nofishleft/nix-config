@@ -475,7 +475,7 @@
         "initialClass:yad, initialTitle:SteamTinkerLaunch-OpenSettings"
         "initialClass:dota2"
         "initialClass:steam_app_1172710"
-        "initialTitle:World of Warcraft"
+        "initialTitle:\"World of Warcraft\""
       ]) ++ (builtins.concatMap (x: ["workspace name:H silent, ${x}" "monitor DP-2, ${x}"]) [
         # WS H, DP-2
         "initialClass:Slack"
